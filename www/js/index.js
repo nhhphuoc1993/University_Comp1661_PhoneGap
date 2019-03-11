@@ -105,9 +105,9 @@ function displayStorages(results) {
     for (var i = 0; i < length; i++) {
         var storage = results.rows.item(i);
         var edit_btn =
-            "<a href='#popupEdit' data-rel='popup'  data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-edit ui-btn-inline ui-btn-b ui-btn-icon-notext'>Edit storage</a>";
+            "<a href='#popupEdit' data-rel='popup'  data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-edit ui-btn-inline ui-btn-b ui-btn-icon-notext' class='editBtn' >Edit storage</a>";
         var delete_btn =
-            "<a href= '#popupDeleteDialog' data-rel= 'popup' data-position-to= 'window' data-transition= 'pop' class= 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-inline ui-btn-b ui-btn-icon-notext' id='deleteBtn' >Delete storage</a >";
+            "<a href= '#popupDeleteDialog' data-rel= 'popup' data-position-to= 'window' data-transition= 'pop' class= 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-inline ui-btn-b ui-btn-icon-notext' class='deleteBtn' >Delete storage</a >";
         $("#storage_table tbody")
             .last()
             .after(
@@ -119,7 +119,12 @@ function displayStorages(results) {
                     storage.reporter
                 }</td><td>${edit_btn} ${delete_btn}</td></tr>;`,
             );
-        lstStorages.on("tap", "#storage_table tbody td", function() {
+        lstStorages.on("tap", ".deleteBtn", function() {
+            // https://stackoverflow.com/questions/14460421/get-the-contents-of-a-table-row-with-a-button-click
+            var $item = $(this)
+                .closest("tr") // Finds the closest row <tr>
+                .find(".ui-hidden-accessible") // Gets a descendent with class="ui-hidden-accessible"
+                .text(); // Retrieves the text within <td>
             //Set event for the list item
             $("#popupDeleteDialog").popup("open");
         });
