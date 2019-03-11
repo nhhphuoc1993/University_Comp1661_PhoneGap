@@ -4,16 +4,16 @@
     font-size: 15px;
 }
 
-.required_star {
+.inputRequired {
     color: red;
 }
 
-#storage_table td {
+#tableStorage td {
     text-align: center;
     vertical-align: middle;
 }
 
-#storage_table th {
+#tableStorage th {
     text-align: center;
     vertical-align: text-bottom;
 }
