@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"
+        />
+        <!-- css -->
+        <link rel="stylesheet" type="text/css" href="./css/index.css" />
+        <link
+            rel="stylesheet"
+            href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+        />
+        <!-- js -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="./js/index.js"></script>
+        <script type="text/javascript" src="./js/dbHandler.js"></script>
+        <script type="text/javascript" src="./js/storageHandler.js"></script>
+        <script type="text/javascript" src="./js/index.js"></script>
+    </head>
+    <body>
+        <!-- Add page -->
+        <div data-role="page" id="add_storage">
+            <div data-role="header">
+                <a
+                    href="./index.html"
+                    class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l"
+                    >Back</a
+                >
+                <h1 class="ui-title">ADD STORAGE</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <form name="submitForm" id="submitForm" onsubmit="return formSubmit(this)">
+                    <div class="ui-grid-solo">
+                        <p style="text-align: right">
+                            <em class="required_star">*</em> indicates required
+                        </p>
+                        <!-- Storage type (e.g. home, business, etc.) – required field -->
+                        <div class="ui-field-contain">
+                            <label for="storage_type"
+                                >Storage type<em class="required_star">*</em></label
+                            >
+                            <select name="storage_type" id="storage_type">
+                                <option value=""></option>
+                                <option value="home">Home</option>
+                                <option value="business">Business</option>
+                            </select>
+                        </div>
+                        <p id="storage_type_alert" class="alert"></p>
+
+                        <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
+                        <div class="ui-field-contain">
+                            <label for="dimension"
+                                >Dimension (m<sup>2</sup>)<em class="required_star">*</em></label
+                            >
+                            <input
+                                type="number"
+                                name="dimension"
+                                id="dimension"
+                                value=""
+                                min="0"
+                                data-clear-btn="true"
+                                pattern="[0-9](.[0-9])?"
+                                placeholder="Enter dimension..."
+                            />
+                        </div>
+                        <p id="dimension_alert" class="alert"></p>
+
+                        <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
+                        <div class="ui-field-contain">
+                            <label>DateTime<em class="required_star">*</em></label>
+                            <input
+                                type="datetime-local"
+                                data-clear-btn="true"
+                                name="adding_datetime"
+                                id="adding_datetime"
+                                placeholder="Enter date and time of adding the storage..."
+                                value=""
+                            />
+                        </div>
+                        <p id="datetime_alert" class="alert"></p>
+
+                        <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
+                        <div class="ui-field-contain">
+                            <label for="storage_feature"
+                                >Features<em class="required_star">*</em></label
+                            >
+                            <input
+                                type="text"
+                                name="storage_feature"
+                                id="storage_feature"
+                                value=""
+                                data-clear-btn="true"
+                                placeholder="Enter storage features..."
+                            />
+                        </div>
+                        <p id="storage_feature_alert" class="alert"></p>
+
+                        <!-- Monthly rent price - required field -->
+                        <div class="ui-field-contain">
+                            <label for="price"
+                                >Monthly price($)<em class="required_star">*</em></label
+                            >
+                            <input
+                                type="number"
+                                name="price"
+                                id="price"
+                                value=""
+                                min="0"
+                                data-clear-btn="true"
+                                pattern="[0-9](.[0-9])?"
+                                placeholder="Enter monthly rent price..."
+                            />
+                        </div>
+                        <p id="price_alert" class="alert"></p>
+
+                        <!-- Name of the reporter – required fields -->
+                        <div class="ui-field-contain">
+                            <label for="reporter">Reporter<em class="required_star">*</em></label>
+                            <input
+                                type="text"
+                                name="reporter"
+                                id="reporter"
+                                value=""
+                                data-clear-btn="true"
+                                placeholder="Enter reporter's name..."
+                            />
+                        </div>
+                        <p id="reporter_alert" class="alert"></p>
+
+                        <!-- Notes – optional field -->
+                        <div class="ui-field-contain">
+                            <label for="notes">Notes</label>
+                            <textarea
+                                type="text"
+                                name="notes"
+                                id="notes"
+                                value=""
+                                placeholder="Enter your notes..."
+                            ></textarea>
+                        </div>
+                    </div>
+                    <!-- Submit -->
+                    <div class="ui-grid-solo">
+                        <button
+                            type="submit"
+                            id="submit"
+                            style="background-color: royalblue; color: white"
+                            class="ui-btn ui-corner-all"
+                        >
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
