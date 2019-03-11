@@ -23,7 +23,7 @@
     </head>
     <body>
         <!-- View list page -->
-        <div data-role="page" id="list_storage">
+        <div data-role="page" id="listStorage">
             <div data-role="header">
                 <h1 class="ui-title">VIEW STORAGE</h1>
             </div>
@@ -59,7 +59,7 @@
                     <div class="ui-block-a">
                         <table
                             data-role="table"
-                            id="storage_table"
+                            id="tableStorage"
                             data-mode="columntoggle"
                             class="ui-body-d ui-shadow table-stripe ui-responsive"
                             data-column-btn-theme="b"
@@ -68,17 +68,21 @@
                         >
                             <thead>
                                 <tr class="ui-bar-d">
-                                    <th class="ui-hidden-accessible">_id</th>
+                                    <th class="ui-hidden-accessible">Id</th>
                                     <th>#</th>
                                     <th>Type</th>
                                     <th data-priority="2">Features</th>
                                     <th data-priority="2">Datetime</th>
                                     <th data-priority="2">
-                                        Price($)<span style="font-size: 13px"></span>
+                                        Price($)<span
+                                            style="font-size: 13px"
+                                        ></span>
                                     </th>
                                     <th data-priority="2">
                                         Dimension
-                                        <span style="font-size: 13px">(m<sup>2</sup>)</span>
+                                        <span style="font-size: 13px"
+                                            >(m<sup>2</sup>)</span
+                                        >
                                     </th>
                                     <th data-priority="2">Reporter</th>
                                     <th>Actions</th>
@@ -100,7 +104,8 @@
                                     </div>
                                     <div role="main" class="ui-content">
                                         <h3 class="ui-title">
-                                            Are you sure you want to delete this storage?
+                                            Are you sure you want to delete this
+                                            storage?
                                         </h3>
                                         <p>This action cannot be undone.</p>
                                         <a
@@ -123,6 +128,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h1>NGUYEN HO HAI PHUOC</h1>
             </div>
         </div>
     </body>
