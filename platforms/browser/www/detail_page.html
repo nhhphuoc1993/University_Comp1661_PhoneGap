@@ -22,8 +22,8 @@
         <script type="text/javascript" src="./js/index.js"></script>
     </head>
     <body>
-        <!-- Add page -->
-        <div data-role="page" id="editStorage">
+        <!-- Detail page -->
+        <div data-role="page" id="pgDetailStorage">
             <div data-role="header">
                 <a
                     href="./index.html"
@@ -33,143 +33,120 @@
                 <h1 class="ui-title">STORAGE DETAIL</h1>
             </div>
             <div role="main" class="ui-content">
-                <form
-                    name="submitForm"
-                    id="submitForm"
-                    onsubmit="return editormSubmit(this)"
-                >
-                    <div class="ui-grid-solo">
-                        <p style="text-align: right">
-                            <em class="inputRequired">*</em> indicates required
-                        </p>
-                        <!-- Storage type (e.g. home, business, etc.) – required field -->
-                        <div class="ui-field-contain">
-                            <label for="storageType"
-                                >Storage type<em class="inputRequired"
-                                    >*</em
-                                ></label
-                            >
-                            <select name="storageType" id="storageType">
-                                <option value=""></option>
-                                <option value="home">Home</option>
-                                <option value="business">Business</option>
-                            </select>
-                        </div>
-                        <p id="storageTypeAlert" class="alert"></p>
-
-                        <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
-                        <div class="ui-field-contain">
-                            <label for="dimension"
-                                >Dimension (m<sup>2</sup>)<em
-                                    class="inputRequired"
-                                    >*</em
-                                ></label
-                            >
-                            <input
-                                type="number"
-                                name="dimension"
-                                id="dimension"
-                                value=""
-                                min="0"
-                                data-clear-btn="true"
-                                pattern="[0-9](.[0-9])?"
-                                placeholder="Enter dimension..."
-                            />
-                        </div>
-                        <p id="dimensionAlert" class="alert"></p>
-
-                        <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
-                        <div class="ui-field-contain">
-                            <label
-                                >DateTime<em class="inputRequired">*</em></label
-                            >
-                            <input
-                                type="datetime-local"
-                                data-clear-btn="true"
-                                name="addingDatetime"
-                                id="addingDatetime"
-                                placeholder="Enter date and time of adding the storage..."
-                                value=""
-                            />
-                        </div>
-                        <p id="datetimeAlert" class="alert"></p>
-
-                        <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
-                        <div class="ui-field-contain">
-                            <label for="storageFeature"
-                                >Features<em class="inputRequired">*</em></label
-                            >
-                            <input
-                                type="text"
-                                name="storageFeature"
-                                id="storageFeature"
-                                value=""
-                                data-clear-btn="true"
-                                placeholder="Enter storage features..."
-                            />
-                        </div>
-                        <p id="storageFeatureAlert" class="alert"></p>
-
-                        <!-- Monthly rent price - required field -->
-                        <div class="ui-field-contain">
-                            <label for="price"
-                                >Monthly price($)<em class="inputRequired"
-                                    >*</em
-                                ></label
-                            >
-                            <input
-                                type="number"
-                                name="price"
-                                id="price"
-                                value=""
-                                min="0"
-                                data-clear-btn="true"
-                                pattern="[0-9](.[0-9])?"
-                                placeholder="Enter monthly rent price..."
-                            />
-                        </div>
-                        <p id="priceAlert" class="alert"></p>
-
-                        <!-- Name of the reporter – required fields -->
-                        <div class="ui-field-contain">
-                            <label for="reporter"
-                                >Reporter<em class="inputRequired">*</em></label
-                            >
-                            <input
-                                type="text"
-                                name="reporter"
-                                id="reporter"
-                                value=""
-                                data-clear-btn="true"
-                                placeholder="Enter reporter's name..."
-                            />
-                        </div>
-                        <p id="reporterAlert" class="alert"></p>
-
-                        <!-- Notes – optional field -->
-                        <div class="ui-field-contain">
-                            <label for="notes">Notes</label>
-                            <textarea
-                                type="text"
-                                name="notes"
-                                id="notes"
-                                value=""
-                                placeholder="Enter your notes..."
-                            ></textarea>
-                        </div>
+                <div class="ui-grid-solo">
+                    <!-- Storage id -->
+                    <div class="ui-field-contain ui-hidden-accessible">
+                        <label for="pgDetailStorageId">Storage Id</label>
+                        <input
+                            type="text"
+                            name="pgDetailStorageId"
+                            id="pgDetailStorageId"
+                            value=""
+                            readonly
+                        />
                     </div>
-                    <!-- Submit -->
-                    <div class="ui-grid-solo">
-                        <button
-                            type="submit"
-                            id="submit"
-                            style="background-color: royalblue; color: white"
-                            class="ui-btn ui-corner-all"
+                    <!-- Storage type (e.g. home, business, etc.) – required field -->
+                    <div class="ui-field-contain">
+                        <label for="pgDetailStorageType">Storage type</label>
+                        <select name="pgDetailStorageType" id="pgDetailStorageType" disabled>
+                            <option value=""></option>
+                            <option value="home">Home</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                    <p id="pgDetailStorageTypeAlert" class="alert"></p>
+
+                    <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
+                    <div class="ui-field-contain">
+                        <label for="pgDetailDimension">Dimension (m<sup>2</sup>)</label>
+                        <input
+                            type="number"
+                            name="pgDetailDimension"
+                            id="pgDetailDimension"
+                            disabled
+                        />
+                    </div>
+                    <p id="pgDetailDimensionAlert" class="alert"></p>
+
+                    <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
+                    <div class="ui-field-contain">
+                        <label>DateTime<em class="inputRequired">*</em></label>
+                        <input
+                            type="datetime-local"
+                            data-clear-btn="true"
+                            name="pgDetailDatetime"
+                            id="pgDetailDatetime"
+                            placeholder="Enter date and time of adding the storage..."
+                            value=""
+                        />
+                    </div>
+                    <p id="pgDetailDatetimeAlert" class="alert"></p>
+
+                    <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
+                    <div class="ui-field-contain">
+                        <label for="pgDetailStorageFeature"
+                            >Features<em class="inputRequired">*</em></label
                         >
-                            Add
-                        </button>
+                        <input
+                            type="text"
+                            name="pgDetailStorageFeature"
+                            id="pgDetailStorageFeature"
+                            value=""
+                            data-clear-btn="true"
+                            placeholder="Enter storage features..."
+                        />
                     </div>
-                </form>
+                    <p id="storageFeatureAlert" class="alert"></p>
+
+                    <!-- Monthly rent price - required field -->
+                    <div class="ui-field-contain">
+                        <label for="pgDetailPrice"
+                            >Monthly price($)<em class="inputRequired">*</em></label
+                        >
+                        <input
+                            type="number"
+                            name="pgDetailPrice"
+                            id="pgDetailPrice"
+                            value=""
+                            min="0"
+                            data-clear-btn="true"
+                            pattern="[0-9](.[0-9])?"
+                            placeholder="Enter monthly rent price..."
+                        />
+                    </div>
+                    <p id="pgDetailPriceAlert" class="alert"></p>
+
+                    <!-- Name of the reporter – required fields -->
+                    <div class="ui-field-contain">
+                        <label for="pgDetailReporter"
+                            >Reporter<em class="inputRequired">*</em></label
+                        >
+                        <input
+                            type="text"
+                            name="pgDetailReporter"
+                            id="pgDetailReporter"
+                            value=""
+                            data-clear-btn="true"
+                            placeholder="Enter reporter's name..."
+                        />
+                    </div>
+                    <p id="pgDetailReporterAlert" class="alert"></p>
+
+                    <!-- Notes – optional field -->
+                    <div class="ui-field-contain">
+                        <label for="pgDetailNotes">Notes</label>
+                        <textarea
+                            type="text"
+                            name="pgDetailNotes"
+                            id="notes"
+                            value=""
+                            placeholder="Enter your notes..."
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h1>NGUYEN HO HAI PHUOC</h1>
             </div>
         </div>
     </body>

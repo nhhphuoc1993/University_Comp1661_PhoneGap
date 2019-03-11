@@ -23,52 +23,44 @@
     </head>
     <body>
         <!-- Add page -->
-        <div data-role="page" id="storageAdd">
+        <div data-role="page" id="pageAddStorage">
             <div data-role="header">
                 <a
                     href="./index.html"
                     class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l"
+                    id="btnBack"
                     >Back</a
                 >
                 <h1 class="ui-title">ADD STORAGE</h1>
             </div>
             <div role="main" class="ui-content">
-                <form
-                    name="submitForm"
-                    id="submitForm"
-                    onsubmit="return addFormSubmit(this)"
-                >
+                <form name="submitForm" id="submitForm" onsubmit="return addFormSubmit(this)">
                     <div class="ui-grid-solo">
                         <p style="text-align: right">
                             <em class="inputRequired">*</em> indicates required
                         </p>
                         <!-- Storage type (e.g. home, business, etc.) – required field -->
                         <div class="ui-field-contain">
-                            <label for="storageType"
-                                >Storage type<em class="inputRequired"
-                                    >*</em
-                                ></label
+                            <label for="pgAddStorageType"
+                                >Storage type<em class="inputRequired">*</em></label
                             >
-                            <select name="storageType" id="storageType">
+                            <select name="pgAddStorageType" id="pgAddStorageType">
                                 <option value=""></option>
                                 <option value="home">Home</option>
                                 <option value="business">Business</option>
                             </select>
                         </div>
-                        <p id="storageTypeAlert" class="alert"></p>
+                        <p id="pgAddStorageTypeAlert" class="alert"></p>
 
                         <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                         <div class="ui-field-contain">
-                            <label for="dimension"
-                                >Dimension (m<sup>2</sup>)<em
-                                    class="inputRequired"
-                                    >*</em
-                                ></label
+                            <label for="pgAddDimension"
+                                >Dimension (m<sup>2</sup>)<em class="inputRequired">*</em></label
                             >
                             <input
                                 type="number"
-                                name="dimension"
-                                id="dimension"
+                                name="pgAddDimension"
+                                id="pgAddDimension"
                                 value=""
                                 min="0"
                                 data-clear-btn="true"
@@ -76,51 +68,47 @@
                                 placeholder="Enter dimension..."
                             />
                         </div>
-                        <p id="dimensionAlert" class="alert"></p>
+                        <p id="pgAddDimensionAlert" class="alert"></p>
 
                         <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                         <div class="ui-field-contain">
-                            <label
-                                >DateTime<em class="inputRequired">*</em></label
-                            >
+                            <label>DateTime<em class="inputRequired">*</em></label>
                             <input
                                 type="datetime-local"
                                 data-clear-btn="true"
-                                name="addingDatetime"
-                                id="addingDatetime"
+                                name="pgAddDatetime"
+                                id="pgAddDatetime"
                                 placeholder="Enter date and time of adding the storage..."
                                 value=""
                             />
                         </div>
-                        <p id="datetimeAlert" class="alert"></p>
+                        <p id="pgAddDatetimeAlert" class="alert"></p>
 
                         <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
                         <div class="ui-field-contain">
-                            <label for="storageFeature"
+                            <label for="pgAddStorageFeature"
                                 >Features<em class="inputRequired">*</em></label
                             >
                             <input
                                 type="text"
-                                name="storageFeature"
-                                id="storageFeature"
+                                name="pgAddStorageFeature"
+                                id="pgAddStorageFeature"
                                 value=""
                                 data-clear-btn="true"
                                 placeholder="Enter storage features..."
                             />
                         </div>
-                        <p id="storageFeatureAlert" class="alert"></p>
+                        <p id="pgAddStorageFeatureAlert" class="alert"></p>
 
                         <!-- Monthly rent price - required field -->
                         <div class="ui-field-contain">
-                            <label for="price"
-                                >Monthly price($)<em class="inputRequired"
-                                    >*</em
-                                ></label
+                            <label for="pgAddPrice"
+                                >Monthly price($)<em class="inputRequired">*</em></label
                             >
                             <input
                                 type="number"
-                                name="price"
-                                id="price"
+                                name="pgAddPrice"
+                                id="pgAddPrice"
                                 value=""
                                 min="0"
                                 data-clear-btn="true"
@@ -128,38 +116,38 @@
                                 placeholder="Enter monthly rent price..."
                             />
                         </div>
-                        <p id="priceAlert" class="alert"></p>
+                        <p id="pgAddPriceAlert" class="alert"></p>
 
                         <!-- Name of the reporter – required fields -->
                         <div class="ui-field-contain">
-                            <label for="reporter"
+                            <label for="pgAddReporter"
                                 >Reporter<em class="inputRequired">*</em></label
                             >
                             <input
                                 type="text"
-                                name="reporter"
-                                id="reporter"
+                                name="pgAddReporter"
+                                id="pgAddReporter"
                                 value=""
                                 data-clear-btn="true"
                                 placeholder="Enter reporter's name..."
                             />
                         </div>
-                        <p id="reporterAlert" class="alert"></p>
+                        <p id="pgAddReporterAlert" class="alert"></p>
 
                         <!-- Notes – optional field -->
                         <div class="ui-field-contain">
-                            <label for="notes">Notes</label>
+                            <label for="pgAddNotes">Notes</label>
                             <textarea
                                 type="text"
-                                name="notes"
-                                id="notes"
+                                name="pgAddNotes"
+                                id="pgAddNotes"
                                 value=""
                                 placeholder="Enter your notes..."
                             ></textarea>
                         </div>
                     </div>
                     <!-- Submit -->
-                    <div class="ui-grid-solo">
+                    <div class="ui-field-contain">
                         <button
                             type="submit"
                             id="submit"

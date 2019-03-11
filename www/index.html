@@ -23,7 +23,7 @@
     </head>
     <body>
         <!-- View list page -->
-        <div data-role="page" id="listStorage">
+        <div data-role="page" id="pgListStorage">
             <div data-role="header">
                 <h1 class="ui-title">VIEW STORAGE</h1>
             </div>
@@ -74,17 +74,14 @@
                                     <th data-priority="2">Features</th>
                                     <th data-priority="2">Datetime</th>
                                     <th data-priority="2">
-                                        Price($)<span
-                                            style="font-size: 13px"
-                                        ></span>
+                                        Price($)<span style="font-size: 13px"></span>
                                     </th>
                                     <th data-priority="2">
                                         Dimension
-                                        <span style="font-size: 13px"
-                                            >(m<sup>2</sup>)</span
-                                        >
+                                        <span style="font-size: 13px">(m<sup>2</sup>)</span>
                                     </th>
                                     <th data-priority="2">Reporter</th>
+                                    <th class="ui-hidden-accessible">Notes</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -104,8 +101,7 @@
                                     </div>
                                     <div role="main" class="ui-content">
                                         <h3 class="ui-title">
-                                            Are you sure you want to delete this
-                                            storage?
+                                            Are you sure you want to delete this storage?
                                         </h3>
                                         <p>This action cannot be undone.</p>
                                         <a
