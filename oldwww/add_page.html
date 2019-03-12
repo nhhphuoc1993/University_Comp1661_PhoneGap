@@ -34,7 +34,11 @@
                 <h1 class="ui-title">ADD STORAGE</h1>
             </div>
             <div role="main" class="ui-content">
-                <form name="submitForm" id="submitForm" onsubmit="return addFormSubmit(this)">
+                <form
+                    name="submitForm"
+                    id="submitForm"
+                    onsubmit="return addFormSubmit(this)"
+                >
                     <div class="ui-grid-solo">
                         <p style="text-align: right">
                             <em class="inputRequired">*</em> indicates required
@@ -42,9 +46,14 @@
                         <!-- Storage type (e.g. home, business, etc.) – required field -->
                         <div class="ui-field-contain">
                             <label for="pgAddStorageType"
-                                >Storage type<em class="inputRequired">*</em></label
+                                >Storage type<em class="inputRequired"
+                                    >*</em
+                                ></label
                             >
-                            <select name="pgAddStorageType" id="pgAddStorageType">
+                            <select
+                                name="pgAddStorageType"
+                                id="pgAddStorageType"
+                            >
                                 <option value=""></option>
                                 <option value="home">Home</option>
                                 <option value="business">Business</option>
@@ -55,7 +64,10 @@
                         <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                         <div class="ui-field-contain">
                             <label for="pgAddDimension"
-                                >Dimension (m<sup>2</sup>)<em class="inputRequired">*</em></label
+                                >Dimension (m<sup>2</sup>)<em
+                                    class="inputRequired"
+                                    >*</em
+                                ></label
                             >
                             <input
                                 type="number"
@@ -72,7 +84,9 @@
 
                         <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                         <div class="ui-field-contain">
-                            <label>DateTime<em class="inputRequired">*</em></label>
+                            <label
+                                >DateTime<em class="inputRequired">*</em></label
+                            >
                             <input
                                 type="datetime-local"
                                 data-clear-btn="true"
@@ -103,7 +117,9 @@
                         <!-- Monthly rent price - required field -->
                         <div class="ui-field-contain">
                             <label for="pgAddPrice"
-                                >Monthly price($)<em class="inputRequired">*</em></label
+                                >Monthly price($)<em class="inputRequired"
+                                    >*</em
+                                ></label
                             >
                             <input
                                 type="number"
@@ -154,13 +170,13 @@
                             style="background-color: royalblue; color: white"
                             class="ui-btn ui-corner-all"
                         >
-                            Add
+                            Submit
                         </button>
                     </div>
                 </form>
             </div>
             <div data-role="footer" data-position="fixed">
-                <h1>NGUYEN HO HAI PHUOC</h1>
+                <h1 class="ui-title">NGUYEN HO HAI PHUOC</h1>
             </div>
         </div>
     </body>
