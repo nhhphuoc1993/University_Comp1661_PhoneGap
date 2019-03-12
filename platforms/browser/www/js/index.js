@@ -1,5 +1,3 @@
-// https://www.youtube.com/watch?v=vL2mFknpHnE&index=15&list=PLxyOsIbHSrxmbXmqJ4WmI0-8SbrcM9fN8
-
 // $(document).on("ready", function() {
 //     databaseHandler.createDatabase();
 //     storageHandler.loadStorages(displayStorages);
@@ -14,14 +12,23 @@ function addFormSubmit() {
     var reporter = document.getElementById("pgAddReporter").value;
     var notes = document.getElementById("pgAddNotes").value;
 
-    if (!storageType || !dimension || !addingDatetime || !storageFeature || !price || !reporter) {
+    if (
+        !storageType ||
+        !dimension ||
+        !addingDatetime ||
+        !storageFeature ||
+        !price ||
+        !reporter
+    ) {
         // storage type alert
         var storageTypeAlert = null;
         if (storageType === "") {
             storageTypeAlert = "This field cannot be empty!";
             event.preventDefault();
         }
-        document.getElementById("pgAddStorageTypeAlert").innerHTML = storageTypeAlert;
+        document.getElementById(
+            "pgAddStorageTypeAlert"
+        ).innerHTML = storageTypeAlert;
 
         // dimension alert
         var dimensionAlert = null;
@@ -29,7 +36,9 @@ function addFormSubmit() {
             dimensionAlert = "This field cannot be empty!";
             event.preventDefault();
         }
-        document.getElementById("pgAddDimensionAlert").innerHTML = dimensionAlert;
+        document.getElementById(
+            "pgAddDimensionAlert"
+        ).innerHTML = dimensionAlert;
 
         // datetime alert
         var datetimeAlert = null;
@@ -45,7 +54,9 @@ function addFormSubmit() {
             storageFeatureAlert = "This field cannot be empty!";
             event.preventDefault();
         }
-        document.getElementById("pgAddStorageFeatureAlert").innerHTML = storageFeatureAlert;
+        document.getElementById(
+            "pgAddStorageFeatureAlert"
+        ).innerHTML = storageFeatureAlert;
 
         // price alert
         var priceAlert = null;
@@ -75,7 +86,7 @@ function addFormSubmit() {
             `Storage type: ${storageType}; Dimension: ${dimension}, Datetime of adding storage: ${
                 addingDatetime.value
             }, storageFeature: ${storageFeature}, Price: ${price}, Reporter: ${reporter}, Notes: ${notes}`,
-            "storage - add",
+            "storage - add"
         );
 
         storageHandler.addStorage(
@@ -85,7 +96,7 @@ function addFormSubmit() {
             storageFeature,
             price,
             reporter,
-            notes,
+            notes
         );
     }
 }
@@ -98,7 +109,7 @@ var currentStorage = {
     storageFeature: "",
     price: -1,
     reporter: "",
-    notes: "",
+    notes: ""
 };
 
 function displayStorages(results) {
@@ -107,48 +118,40 @@ function displayStorages(results) {
     lstStorages.empty();
     for (var i = 0; i < length; i++) {
         var storage = results.rows.item(i);
-        var editBtn = `<a href="./detail_page.html" class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-edit ui-btn-inline ui-btn-b ui-btn-icon-notext btnEdit' >Edit storage</a>`;
+        var editBtn = `<a href="./edit_page.html" class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-edit ui-btn-inline ui-btn-b ui-btn-icon-notext btnEdit' >Edit storage</a>`;
         var deleteBtn =
             "<a href= '#popupDeleteDialog' data-rel= 'popup' data-position-to= 'window' data-transition= 'pop' class= 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-inline ui-btn-b ui-btn-icon-notext btnDelete' >Delete storage</a >";
-        // $("#tableStorage tbody")
-        //     .last()
-        //     .after(
-        //         `<tr><td class="ui-hidden-accessible">${storage._id}</></td><td>${i + 1}</td><td>${
-        //             storage.storageType
-        //         }</td><td>${storage.dimension}</td><td>${storage.addingDatetime}</td><td>${
-        //             storage.storageFeature
-        //         }</td><td>${storage.price}</td><td>${
-        //             storage.reporter
-        //         }</td><td>${editBtn} ${deleteBtn}</td></tr>;`,
-        //     );
         lstStorages.append(
-            `<tr><td class="ui-hidden-accessible trStorageId" >${storage._id}</></td><td>${i +
-                1}</td><td class="trStorageType">${
+            `<tr><td class="ui-hidden-accessible trStorageId" >${
+                storage._id
+            }</></td><td>${i + 1}</td><td class="trStorageType">${
                 storage.storageType
-            }</td><td class="trDimension">${storage.dimension}</td><td class="trAddingDatetime">${
+            }</td><td class="trDimension">${
+                storage.dimension
+            }</td><td class="trAddingDatetime">${
                 storage.addingDatetime
-            }</td><td class="trStorageFeature">${storage.storageFeature}</td><td class="trPrice">${
+            }</td><td class="trStorageFeature">${
+                storage.storageFeature
+            }</td><td class="trPrice">${
                 storage.price
             }</td><td class="trReporter">${
                 storage.reporter
             }</td><td class="ui-hidden-accessible trNotes">${
                 storage.notes
-            }</td><td>${editBtn}${deleteBtn}</td></tr>;`,
+            }</td><td>${editBtn}${deleteBtn}</td></tr>;`
         );
     }
 
-    lstStorages.on("click", ".btnDelete", function() {
+    lstStorages.on("vclick", ".btnDelete", function() {
         var selectedStorageId = $(this)
             .closest("tr") // Finds the closest row <tr>
             .find(".trStorageId") // Gets a descendent with class="trStorageId"
             .text(); // Retrieves the text within <td>
         currentStorage.id = selectedStorageId;
         console.log(currentStorage.id, "btnDelete-id");
-        //Set event for the list item
-        $("#popupDeleteDialog").popup("open");
     });
 
-    lstStorages.on("click", ".btnEdit", function() {
+    lstStorages.on("vclick", ".btnEdit", function() {
         var selectedStorageId = $(this)
             .closest("tr") // Finds the closest row <tr>
             .find(".trStorageId") // Gets a descendent with class="trStorageId"
@@ -198,7 +201,9 @@ function displayStorages(results) {
         currentStorage.notes = selectedNotes;
     });
 
-    lstStorages.listview("refresh");
+    $("#pgListStorage").bind("pageinit", function() {
+        lstStorages.listview("refresh");
+    });
 }
 
 $(document).on("pagebeforeshow", "#pgListStorage", function() {
@@ -206,14 +211,18 @@ $(document).on("pagebeforeshow", "#pgListStorage", function() {
     storageHandler.loadStorages(displayStorages);
 });
 
-$(document).on("pagebeforeshow", "#pgDetailStorage", function() {
-    $(`#pgDetailStorageType option[value='${currentStorage.storageType}']`).attr(
-        "selected",
-        "selected",
-    );
-    $("#pgDetailStorageType").selectmenu("refresh");
-    $("#pgDetailDimension").val(currentStorage.dimension);
-    console.log(currentStorage.storageType, "storage-storageType");
+$(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
+    $(
+        `#pgUpdateStorageType option[value='${currentStorage.storageType}']`
+    ).attr("selected", "selected");
+    $("#pgUpdateStorageType").selectmenu("refresh");
+
+    $("#pgUpdateDimension").val(currentStorage.dimension);
+    $("#pgUpdateDatetime").val(currentStorage.addingDatetime);
+    $("#pgUpdateStorageFeature").val(currentStorage.storageFeature);
+    $("#pgUpdatePrice").val(currentStorage.price);
+    $("#pgUpdateReporter").val(currentStorage.reporter);
+    $("#pgUpdateNotes").val(currentStorage.notes);
 });
 
 function deleteStorage() {
@@ -223,8 +232,6 @@ function deleteStorage() {
 }
 
 function updateStorage() {
-    var newName = $("#txtNewName").val();
-    var newQuantity = $("#txtNewQuantity").val();
-    storageHandler.updateStorage(currentStorage.id, notes);
-    $("#updatedialog").dialog("close");
+    var newNotes = $("#pgUpdateNotes").val();
+    storageHandler.updateStorage(currentStorage.id, newNotes);
 }
