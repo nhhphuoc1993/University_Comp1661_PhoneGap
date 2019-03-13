@@ -15,18 +15,16 @@ var databaseHandler = {
                     [],
                     function(tx, results) {},
                     function(tx, error) {
-                        console.log(
-                            "Error while creating the table: " + error.message
-                        );
-                    }
+                        console.log("Error while creating the table: " + error.message);
+                    },
                 );
             },
             function(error) {
                 console.log("Transaction error: " + error.message);
             },
             function() {
-                console.log("Create DB transaction completed successfully");
-            }
+                console.log("Create or load DB transaction completed successfully");
+            },
         );
-    }
+    },
 };

@@ -6,7 +6,7 @@ var storageHandler = {
         storageFeature,
         price,
         reporter,
-        notes
+        notes,
     ) {
         databaseHandler.db.transaction(
             function(tx) {
@@ -19,16 +19,16 @@ var storageHandler = {
                         storageFeature,
                         price,
                         reporter,
-                        notes
+                        notes,
                     ],
                     function(tx, results) {},
                     function(tx, error) {
                         console.log("add Storage error: " + error.message);
-                    }
+                    },
                 );
             },
             function(error) {},
-            function() {}
+            function() {},
         );
     },
     loadStorages: function(displayStorages) {
@@ -42,10 +42,8 @@ var storageHandler = {
                 },
                 function(tx, error) {
                     //TODO: Alert the message to user
-                    console.log(
-                        "Error while selecting the storages" + error.message
-                    );
-                }
+                    console.log("Error while selecting the storages" + error.message);
+                },
             );
         });
     },
@@ -58,7 +56,7 @@ var storageHandler = {
                 function(tx, error) {
                     //TODO: Could make an alert for this one.
                     console.log("Error happen when deleting: " + error.message);
-                }
+                },
             );
         });
     },
@@ -71,8 +69,8 @@ var storageHandler = {
                 function(tx, error) {
                     //TODO: alert/display this message to user
                     console.log("Error updating Storage" + error.message);
-                }
+                },
             );
         });
-    }
+    },
 };
