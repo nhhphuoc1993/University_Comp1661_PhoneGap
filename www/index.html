@@ -47,7 +47,9 @@
                         <!-- Storage type (e.g. home, business, etc.) – required field -->
                         <div class="ui-field-contain">
                             <label for="pgAddStorageType"
-                                >Storage type<em class="inputRequired">*</em></label
+                                >Storage type<em class="inputRequired"
+                                    >*</em
+                                ></label
                             >
                             <select id="pgAddStorageType">
                                 <option value="">Choose option</option>
@@ -59,7 +61,10 @@
                         <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                         <div class="ui-field-contain">
                             <label for="pgAddDimension"
-                                >Dimension (m<sup>2</sup>)<em class="inputRequired">*</em></label
+                                >Dimension (m<sup>2</sup>)<em
+                                    class="inputRequired"
+                                    >*</em
+                                ></label
                             >
                             <input
                                 type="number"
@@ -74,7 +79,9 @@
                         <p id="pgAddDimensionAlert" class="alert"></p>
                         <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                         <div class="ui-field-contain">
-                            <label>DateTime<em class="inputRequired">*</em></label>
+                            <label
+                                >DateTime<em class="inputRequired">*</em></label
+                            >
                             <input
                                 type="datetime-local"
                                 data-clear-btn="true"
@@ -101,7 +108,9 @@
                         <!-- Monthly rent price - required field -->
                         <div class="ui-field-contain">
                             <label for="pgAddPrice"
-                                >Monthly price($)<em class="inputRequired">*</em></label
+                                >Monthly price($)<em class="inputRequired"
+                                    >*</em
+                                ></label
                             >
                             <input
                                 type="number"
@@ -130,7 +139,9 @@
                         <p id="pgAddReporterAlert" class="alert"></p>
 
                         <div class="ui-field-contain">
-                            <label for="pgAddPublicTransport">Public transport</label>
+                            <label for="pgAddPublicTransport"
+                                >Public transport</label
+                            >
                             <select
                                 id="pgAddPublicTransport"
                                 multiple="multiple"
@@ -144,7 +155,9 @@
                         </div>
 
                         <div class="ui-field-contain">
-                            <label for="pgAddShopDistance">Shop distance (m)</label>
+                            <label for="pgAddShopDistance"
+                                >Shop distance (m)</label
+                            >
                             <input
                                 type="number"
                                 id="pgAddShopDistance"
@@ -236,9 +249,27 @@
                         <h1>Options</h1>
                     </div>
                     <div data-role="main" class="ui-content">
-                        <div class="ui-grid-solo" style="max-width: 450px; word-wrap: break-word">
-                            <h4>asd</h4>
-                            <p></p>
+                        <div class="ui-grid-solo detailStorage">
+                            <h4>Storage type:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Dimension:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Date and time:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Feature:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Price:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Reporter:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Condition:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Distance to shops:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Public transportation:</h4>
+                            <p id="detailStorageType"></p>
+                            <h4>Notes:</h4>
+                            <p id="detailStorageType"></p>
                         </div>
                         <div class="ui-grid-solo" style="text-align: center">
                             <a

@@ -14,19 +14,32 @@ function addStorage() {
     let shopDistance = $("#pgAddShopDistance").val();
     let publicTransport = $("#pgAddPublicTransport").val();
 
-    if (!storageType || !dimension || !addingDatetime || !storageFeature || !price || !reporter) {
+    if (
+        !storageType ||
+        !dimension ||
+        !addingDatetime ||
+        !storageFeature ||
+        !price ||
+        !reporter
+    ) {
         event.preventDefault();
         const emptyAlert = "This field cannot be empty!";
         // storage type alert
-        $("#pgAddStorageTypeAlert").text(storageType === "" ? emptyAlert : null);
+        $("#pgAddStorageTypeAlert").text(
+            storageType === "" ? emptyAlert : null
+        );
         // dimension alert
         var dimensionAlert = null;
         $("#pgAddDimensionAlert").text(dimension === "" ? emptyAlert : null);
         // datetime alert
         var datetimeAlert = null;
-        $("#pgAddDatetimeAlert").text(addingDatetime === "" ? emptyAlert : null);
+        $("#pgAddDatetimeAlert").text(
+            addingDatetime === "" ? emptyAlert : null
+        );
         // storage feature alert
-        $("#pgAddStorageFeatureAlert").text(storageFeature === "" ? emptyAlert : null);
+        $("#pgAddStorageFeatureAlert").text(
+            storageFeature === "" ? emptyAlert : null
+        );
         // price alert
         $("#pgAddPriceAlert").text(price === "" ? emptyAlert : null);
         // reporter alert
@@ -36,7 +49,7 @@ function addStorage() {
             `Storage type: ${storageType}; Dimension: ${dimension}, Datetime of adding storage: ${
                 addingDatetime.value
             }, storageFeature: ${storageFeature}, Price: ${price}, Reporter: ${reporter}, Notes: ${notes}, Condition: ${condition}, Shop distance: ${shopDistance}, Public transport: ${publicTransport}`,
-            "storage - add",
+            "storage - add"
         );
 
         storageHandler.addStorage(
@@ -49,7 +62,7 @@ function addStorage() {
             notes,
             condition,
             shopDistance,
-            publicTransport,
+            publicTransport
         );
 
         $(`#pgAddStorageType option[value='']`).attr("selected", "selected");
@@ -78,6 +91,9 @@ var currentStorage = {
     price: null,
     reporter: null,
     notes: null,
+    condition: null,
+    shopDistance: null,
+    publicTransport: null
 };
 
 function displayStorages(results) {
@@ -86,61 +102,46 @@ function displayStorages(results) {
     lstStorages.empty(); //Clean the old data before adding.
     for (let i = 0; i < length; i++) {
         let item = results.rows.item(i);
-        let a = $("<a />");
 
-        let h3Type = $("<h3 />").text("Storage type: ");
-        let spanType = $("<span />").text(item.storageType);
-        spanType.attr("name", "type");
-        h3Type.append(spanType);
-        a.append(h3Type);
+        elementStorage = `
+            <li>
+                <a>
+                    <p name="_id" class="ui-hidden-accessible">Id: ${
+                        item._id
+                    }</p>
+                    <p name="type"><span>Storage type:</span> ${
+                        item.storageType
+                    }</p>
+                    <p name="dimension"><span>Dimension:</span> ${
+                        item.dimension
+                    }</p>
+                    <p name="datetime"><span>Date and time:</span> ${
+                        item.addingDatetime
+                    }</p>
+                    <p name="feature"><span>Feature:</span> ${
+                        item.storageFeature
+                    }</p>
+                    <p name="price"><span>Price:</span> ${item.price}</p>
+                    <p name="reporter"><span>Reporter:</span> ${
+                        item.reporter
+                    }</p>
+                    <p name="notes" class="ui-hidden-accessible">Notes: ${
+                        item.notes
+                    }</p>
+                    <p name="condition" class="ui-hidden-accessible">Condition: ${
+                        item.condition
+                    }</p>
+                    <p name="distance" class="ui-hidden-accessible">Shop distance: ${
+                        item.shopDistance
+                    }</p>
+                    <p name="publicTransport" class="ui-hidden-accessible">Public transportation: ${
+                        item.publicTransport
+                    }</p>
+                </a>
+            </li>
+        `;
 
-        let h4Dimension = $("<h4 />").text("Dimension: ");
-        let spanDimension = $("<span />").text(item.dimension);
-        spanDimension.attr("name", "dimension");
-        h4Dimension.append(spanDimension);
-        a.append(h4Dimension);
-
-        let h4Datetime = $("<h4 />").text("Date and time: ");
-        let spanAddingDatetime = $("<span />").text(item.addingDatetime);
-        spanAddingDatetime.attr("name", "datetime");
-        h4Datetime.append(spanAddingDatetime);
-        a.append(h4Datetime);
-
-        let h4Feature = $("<h4 />").text("Feature: ");
-        let spanFeature = $("<span />").text(item.storageFeature);
-        spanFeature.attr("name", "feature");
-        h4Feature.append(spanFeature);
-        a.append(h4Feature);
-
-        let h4Price = $("<h4 />").text("Price: ");
-        let spanPrice = $("<span />").text(item.price);
-        spanPrice.attr("name", "price");
-        h4Price.append(spanPrice);
-        a.append(h4Price);
-
-        let h4Reporter = $("<h4 />").text("Reporter: ");
-        let spanReporter = $("<span />").text(item.reporter);
-        spanReporter.attr("name", "reporter");
-        h4Reporter.append(spanReporter);
-        a.append(h4Reporter);
-
-        let h4Notes = $("<h4 />").text("Notes: ");
-        let spanNotes = $("<span />").text(item.notes);
-        spanNotes.attr("name", "notes");
-        h4Notes.append(spanNotes);
-        a.append(h4Notes);
-
-        let pId = $("<p />").text("Id: ");
-        let spanId = $("<span />").text(item._id);
-        spanId.attr("name", "_id");
-        pId.append(spanId);
-        pId.attr("class", "ui-hidden-accessible");
-        a.append(pId);
-
-        let li = $("<li/>");
-        li.attr("data-filtertext", item.storageType);
-        li.append(a);
-        lstStorages.append(li);
+        lstStorages.append(elementStorage);
     }
 
     lstStorages.listview("refresh");
