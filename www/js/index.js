@@ -10,33 +10,23 @@ function addStorage() {
     let price = $("#pgAddPrice").val();
     let reporter = $("#pgAddReporter").val();
     let notes = $("#pgAddNotes").val();
+    let condition = $("#pgAddCondition").val();
+    let shopDistance = $("#pgAddShopDistance").val();
+    let publicTransport = $("#pgAddPublicTransport").val();
 
-    if (
-        !storageType ||
-        !dimension ||
-        !addingDatetime ||
-        !storageFeature ||
-        !price ||
-        !reporter
-    ) {
+    if (!storageType || !dimension || !addingDatetime || !storageFeature || !price || !reporter) {
         event.preventDefault();
         const emptyAlert = "This field cannot be empty!";
         // storage type alert
-        $("#pgAddStorageTypeAlert").text(
-            storageType === "" ? emptyAlert : null
-        );
+        $("#pgAddStorageTypeAlert").text(storageType === "" ? emptyAlert : null);
         // dimension alert
         var dimensionAlert = null;
         $("#pgAddDimensionAlert").text(dimension === "" ? emptyAlert : null);
         // datetime alert
         var datetimeAlert = null;
-        $("#pgAddDatetimeAlert").text(
-            addingDatetime === "" ? emptyAlert : null
-        );
+        $("#pgAddDatetimeAlert").text(addingDatetime === "" ? emptyAlert : null);
         // storage feature alert
-        $("#pgAddStorageFeatureAlert").text(
-            storageFeature === "" ? emptyAlert : null
-        );
+        $("#pgAddStorageFeatureAlert").text(storageFeature === "" ? emptyAlert : null);
         // price alert
         $("#pgAddPriceAlert").text(price === "" ? emptyAlert : null);
         // reporter alert
@@ -45,8 +35,8 @@ function addStorage() {
         console.log(
             `Storage type: ${storageType}; Dimension: ${dimension}, Datetime of adding storage: ${
                 addingDatetime.value
-            }, storageFeature: ${storageFeature}, Price: ${price}, Reporter: ${reporter}, Notes: ${notes}`,
-            "storage - add"
+            }, storageFeature: ${storageFeature}, Price: ${price}, Reporter: ${reporter}, Notes: ${notes}, Condition: ${condition}, Shop distance: ${shopDistance}, Public transport: ${publicTransport}`,
+            "storage - add",
         );
 
         storageHandler.addStorage(
@@ -56,7 +46,10 @@ function addStorage() {
             storageFeature,
             price,
             reporter,
-            notes
+            notes,
+            condition,
+            shopDistance,
+            publicTransport,
         );
 
         $(`#pgAddStorageType option[value='']`).attr("selected", "selected");
@@ -68,6 +61,11 @@ function addStorage() {
         $("#pgAddPrice").val(null);
         $("#pgAddReporter").val(null);
         $("#pgAddNotes").val(null);
+        $("#pgAddCondition").val(null);
+        $("#pgAddShopDistance").val(null);
+
+        $(`#pgAddPublicTransport option:selected`).removeAttr("selected");
+        $("#pgAddPublicTransport").selectmenu("refresh");
     }
 }
 
@@ -79,7 +77,7 @@ var currentStorage = {
     storageFeature: null,
     price: null,
     reporter: null,
-    notes: null
+    notes: null,
 };
 
 function displayStorages(results) {
@@ -172,6 +170,7 @@ function displayStorages(results) {
         currentStorage.notes = $(this)
             .find("[name='notes']")
             .text();
+
         //Set event for the list item
         $("#popupUpdateDeleteStorage").popup("open");
     });

@@ -7,11 +7,14 @@ var storageHandler = {
         price,
         reporter,
         notes,
+        condition,
+        shopDistance,
+        publicTransport,
     ) {
         databaseHandler.db.transaction(
             function(tx) {
                 tx.executeSql(
-                    "insert into storage(storageType, dimension, addingDatetime, storageFeature, price, reporter, notes) values(?, ?, ?, ?, ?, ?, ?)",
+                    "insert into storage(storageType, dimension, addingDatetime, storageFeature, price, reporter, notes, condition, shopDistance, publicTransport) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     [
                         storageType,
                         dimension,
@@ -20,6 +23,9 @@ var storageHandler = {
                         price,
                         reporter,
                         notes,
+                        condition,
+                        shopDistance,
+                        publicTransport,
                     ],
                     function(tx, results) {},
                     function(tx, error) {
@@ -60,11 +66,11 @@ var storageHandler = {
             );
         });
     },
-    updateStorage: function(_id, notes) {
+    updateStorage: function(_id, notes, condition, shopDistance, publicTransport) {
         databaseHandler.db.transaction(function(tx) {
             tx.executeSql(
-                "update storage set notes=? where _id = ?",
-                [notes, _id],
+                "update storage set notes=?, condition=?, shopDistance=?, publicTransport=? where _id = ?",
+                [notes, condition, shopDistance, publicTransport, _id],
                 function(tx, result) {},
                 function(tx, error) {
                     //TODO: alert/display this message to user
