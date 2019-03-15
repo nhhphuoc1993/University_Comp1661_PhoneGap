@@ -1,3 +1,5 @@
 https://www.youtube.com/watch?v=vL2mFknpHnE&index=15&list=PLxyOsIbHSrxmbXmqJ4WmI0-8SbrcM9fN8
 
 https://mobiscroll.com/pricing#lite
+
+https://stackoverflow.com/questions/14468659/jquery-mobile-document-ready-vs-page-events
