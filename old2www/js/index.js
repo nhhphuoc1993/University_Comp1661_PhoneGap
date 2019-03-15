@@ -1,14 +1,6 @@
 $(document).on("ready", function() {
     databaseHandler.createDatabase();
-    storageHandler.loadStorages(displayStorages);
 });
-
-// $(document).on("pagebeforeshow", "#pgHome", function() {
-//     $("#linkPgListStorage").bind("tap", () => {
-//         // $("#linkPgListStorage").trigger("tab");
-//         // $("#linkPgListStorage").attr("class", "ui-btn-active");
-//     });
-// });
 
 function addStorage() {
     let storageType = $("#pgAddStorageType").val();
@@ -77,7 +69,7 @@ function addStorage() {
     }
 }
 
-let currentStorage = {
+var currentStorage = {
     id: -1,
     storageType: "",
     dimension: null,
@@ -100,7 +92,7 @@ function displayStorages(results) {
 
         elementStorage = `
             <li>
-                <a href="#pgDetailStorage">
+                <a>
                     <p name="_id" class="ui-hidden-accessible">Id: ${item._id}</p>
                     <p name="type"><span>Storage type:</span> ${item.storageType}</p>
                     <p name="dimension"><span>Dimension:</span> ${item.dimension}</p>
@@ -163,46 +155,14 @@ function displayStorages(results) {
         currentStorage.publicTransport = $(this)
             .find("[name='publicTransport']")
             .text();
+
+        //Set event for the list item
+        $("#popupUpdateDeleteStorage").popup("open");
     });
 }
 
-$(document).on("pagebeforeshow", "#pgDetailStorage", function() {
-    let detailStorage = $("#detailStorage");
-    detailStorage.empty(); //Clean the old data before
-    elementDetailStorage = `
-        <p id="detailStorageId"></p>
-        <h4>Storage type:</h4>
-        <p id="detailStorageType"></p>
-        <h4>Dimension:</h4>
-        <p id="detailStorageDimension"></p>
-        <h4>Date and time:</h4>
-        <p id="detailStorageDatetime"></p>
-        <h4>Feature:</h4>
-        <p id="detailStorageFeature"></p>
-        <h4>Price:</h4>
-        <p id="detailStoragePrice"></p>
-        <h4>Reporter:</h4>
-        <p id="detailStorageReporter"></p>
-        <h4>Condition:</h4>
-        <p id="detailStorageCondition"></p>
-        <h4>Distance to shops:</h4>
-        <p id="detailStorageShopDistance"></p>
-        <h4>Public transportation:</h4>
-        <p id="detailStoragePublicTransport"></p>
-        <h4>Notes:</h4>
-        <p id="detailStorageNotes"></p>
-    `;
-    detailStorage.append(elementDetailStorage);
-
-    $("#btnBackPgListStorage").bind("tap", () => {
-        $("#linkPgListStorage").trigger("tab");
-        $("#linkPgListStorage").attr("class", "ui-btn-active");
-
-        storageHandler.loadStorages(displayStorages);
-        $("#pgHome").bind("pageinit", function() {
-            $("#asdasd").listview("refresh");
-        });
-    });
+$(document).on("pagebeforeshow", "#pgListStorage", function() {
+    storageHandler.loadStorages(displayStorages);
 });
 
 function deleteStorage() {
