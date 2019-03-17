@@ -22,18 +22,9 @@ function addStorage() {
     let notes = $("#pgAddNotes").val();
     let condition = $("#pgAddCondition").val();
     let shopDistance = $("#pgAddShopDistance").val();
-    let publicTransport = $("#pgAddPublicTransport").val()
-        ? $("#pgAddPublicTransport").val()
-        : "";
+    let publicTransport = $("#pgAddPublicTransport").val() ? $("#pgAddPublicTransport").val() : "";
 
-    if (
-        !storageType ||
-        !dimension ||
-        !addingDatetime ||
-        !storageFeature ||
-        !price ||
-        !reporter
-    ) {
+    if (!storageType || !dimension || !addingDatetime || !storageFeature || !price || !reporter) {
         event.preventDefault();
         const emptyAlert = "This field cannot be empty!";
         // storage type alert
@@ -43,9 +34,7 @@ function addStorage() {
         // datetime alert
         $("#pgAddDatetimeAlert").text(addingDatetime == "" ? emptyAlert : "");
         // storage feature alert
-        $("#pgAddStorageFeatureAlert").text(
-            storageFeature == "" ? emptyAlert : ""
-        );
+        $("#pgAddStorageFeatureAlert").text(storageFeature == "" ? emptyAlert : "");
         // price alert
         $("#pgAddPriceAlert").text(price == "" ? emptyAlert : "");
         // reporter alert
@@ -55,7 +44,7 @@ function addStorage() {
             `Storage type: ${storageType}; Dimension: ${dimension}, Datetime of adding storage: ${
                 addingDatetime.value
             }, storageFeature: ${storageFeature}, Price: ${price}, Reporter: ${reporter}, Notes: ${notes}, Condition: ${condition}, Shop distance: ${shopDistance}, Public transport: ${publicTransport}`,
-            "| add"
+            "| add",
         );
 
         storageHandler.addStorage(
@@ -68,7 +57,7 @@ function addStorage() {
             notes,
             condition,
             shopDistance,
-            publicTransport
+            publicTransport,
         );
 
         $(`#pgAddStorageType option[value='']`).attr("selected", "selected");
@@ -99,7 +88,7 @@ let currentStorage = {
     notes: "",
     condition: "",
     shopDistance: -1,
-    publicTransport: ""
+    publicTransport: "",
 };
 
 function displayStorages(results) {
@@ -111,41 +100,37 @@ function displayStorages(results) {
         elementStorage = `
             <li>
                 <a href="#pgDetailStorage">
-                <p name="_id" class="ui-hidden-accessible">${item._id}</p>
-                <p>
-                    <span class="field">Storage type: </span>
-                    <span name="type">${item.storageType}</span>
-                </p>
-                <p>
-                    <span class="field">Dimension:</span>
-                    <span name="dimension">${item.dimension}</span>
-                </p>
-                <p>
-                    <span class="field">Date and time:</span>
-                    <span name="datetime">${item.addingDatetime}</span>
-                </p>
-                <p>
-                    <span class="field">Feature:</span>
-                    <span name="feature">${item.storageFeature}</span>
-                </p>
-                <p>
-                    <span class="field">Price:</span>
-                    <span name="price">${item.price}</span>
-                </p>
-                <p>
-                    <span class="field">Reporter:</span>
-                    <span name="reporter">${item.reporter}</span>
-                </p>
-                <p name="condition" class="ui-hidden-accessible">${
-                    item.condition
-                }</p>
-                <p name="distance" class="ui-hidden-accessible">${
-                    item.shopDistance
-                }</p>
-                <p name="publicTransport" class="ui-hidden-accessible">
-                    ${item.publicTransport}
-                </p>
-                <p name="notes" class="ui-hidden-accessible">${item.notes}</p>
+                    <p name="_id" class="ui-hidden-accessible">${item._id}</p>
+                    <p>
+                        <span class="field">Storage type: </span>
+                        <span name="type">${item.storageType}</span>
+                    </p>
+                    <p>
+                        <span class="field">Dimension:</span>
+                        <span name="dimension">${item.dimension}</span>
+                    </p>
+                    <p>
+                        <span class="field">Date and time:</span>
+                        <span name="datetime">${item.addingDatetime}</span>
+                    </p>
+                    <p>
+                        <span class="field">Feature:</span>
+                        <span name="feature">${item.storageFeature}</span>
+                    </p>
+                    <p>
+                        <span class="field">Price:</span>
+                        <span name="price">${item.price}</span>
+                    </p>
+                    <p>
+                        <span class="field">Reporter:</span>
+                        <span name="reporter">${item.reporter}</span>
+                    </p>
+                    <p name="condition" class="ui-hidden-accessible">${item.condition}</p>
+                    <p name="distance" class="ui-hidden-accessible">${item.shopDistance}</p>
+                    <p name="publicTransport" class="ui-hidden-accessible">
+                        ${item.publicTransport}
+                    </p>
+                    <p name="notes" class="ui-hidden-accessible">${item.notes}</p>
                 </a>
             </li>
         `;
@@ -216,23 +201,17 @@ $(document).on("pagebeforeshow", "#pgDetailStorage", function() {
         <p>${currentStorage.publicTransport}</p>
         <h4>Notes:</h4>
         <p id="detailStorageNotes">${currentStorage.notes}</p>
-
-        <div class="ui-grid-solo" style="text-align:center">
-            <a 
-                href="#pgUpdateStorage" 
-                class="ui-btn ui-btn-inline ui-icon-edit ui-btn-icon-left ui-corner-all" 
-                id="btnToPgUpdateStorage"
-            >Edit</a>
-            <a href="#" class="ui-btn ui-btn-inline ui-icon-recycle ui-btn-icon-right ui-corner-all">Delete</a>
-        </div>
     `;
     detailStorage.append(elementDetailStorage);
 });
 
 function deleteStorage() {
     storageHandler.deleteStorage(currentStorage.id);
-    storageHandler.loadStorages(displayStorages);
-    $("#popupUpdateDeleteStorage").popup("close");
+    $.mobile.changePage("#pgHome", {
+        transition: "pop",
+        reverse: false,
+        changeHash: false,
+    });
 }
 
 $(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
@@ -241,10 +220,7 @@ $(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
         : "";
     if (publicTransportOptions.length > 0) {
         $.each(publicTransportOptions, function(i, v) {
-            $("#pgUpdatePublicTransport option[value='" + v + "']").prop(
-                "selected",
-                true
-            );
+            $("#pgUpdatePublicTransport option[value='" + v + "']").prop("selected", true);
             $("#pgUpdatePublicTransport").selectmenu("refresh");
         });
     }
@@ -252,10 +228,6 @@ $(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
     $("#pgUpdateShopDistance").val(currentStorage.shopDistance);
     $("#pgUpdateCondition").val(currentStorage.condition);
     $("#pgUpdateNotes").val(currentStorage.notes);
-
-    $("#pgUpdateStorage").on("vclick", "#btnUpdateStorage", function() {
-        updateStorage();
-    });
 });
 
 function updateStorage() {
@@ -268,10 +240,18 @@ function updateStorage() {
         newNotes,
         newCondition,
         newShopDistance,
-        newPublicTransport
+        newPublicTransport,
     );
     currentStorage.notes = newNotes;
     currentStorage.condition = newCondition;
     currentStorage.shopDistance = newShopDistance;
     currentStorage.publicTransport = newPublicTransport;
+    $.mobile.changePage("#pgDetailStorage", {
+        transition: "pop",
+        reverse: false,
+        changeHash: false,
+    });
 }
+
+// test file upload
+

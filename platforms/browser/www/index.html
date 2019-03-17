@@ -22,237 +22,353 @@
         <script type="text/javascript" src="./js/index.js"></script>
     </head>
     <body>
-        <div data-role="page" id="pgAddStorage">
-            <div data-role="panel" id="panelAddStorage">
-                <h1>Menu</h1>
-                <ul data-role="listview" data-inset="true">
-                    <li data-role="list-divider">Storages</li>
-                    <li data-icon="plus"><a href="#pgAddStorage">Add</a></li>
-                    <li data-icon="grid"><a href="#pgListStorage">Load</a></li>
-                </ul>
-            </div>
-            <div data-role="header" data-position="fixed">
-                <a
-                    href="#panelAddStorage"
-                    class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all ui-shadow"
-                ></a>
-                <h1 class="ui-title">ADD STORAGE</h1>
-            </div>
-            <div data-role="main" class="ui-content">
-                <form id="formAddStorage">
-                    <div class="ui-grid-solo">
-                        <p style="text-align: right">
-                            <em class="inputRequired">*</em> indicates required
-                        </p>
-                        <!-- Storage type (e.g. home, business, etc.) – required field -->
-                        <div class="ui-field-contain">
-                            <label for="pgAddStorageType"
-                                >Storage type<em class="inputRequired"
-                                    >*</em
-                                ></label
-                            >
-                            <select id="pgAddStorageType">
-                                <option value=""></option>
-                                <option value="home">Home</option>
-                                <option value="business">Business</option>
-                            </select>
-                        </div>
-                        <p id="pgAddStorageTypeAlert" class="alert"></p>
-
-                        <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
-                        <div class="ui-field-contain">
-                            <label for="pgAddDimension"
-                                >Dimension (m<sup>2</sup>)<em
-                                    class="inputRequired"
-                                    >*</em
-                                ></label
-                            >
-                            <input
-                                type="number"
-                                id="pgAddDimension"
-                                value=""
-                                min="0"
-                                data-clear-btn="true"
-                                pattern="[0-9](.[0-9])?"
-                                placeholder="Enter dimension..."
-                            />
-                        </div>
-                        <p id="pgAddDimensionAlert" class="alert"></p>
-
-                        <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
-                        <div class="ui-field-contain">
-                            <label
-                                >DateTime<em class="inputRequired">*</em></label
-                            >
-                            <input
-                                type="datetime-local"
-                                data-clear-btn="true"
-                                id="pgAddDatetime"
-                                placeholder="Enter date and time of adding the storage..."
-                                value=""
-                            />
-                        </div>
-                        <p id="pgAddDatetimeAlert" class="alert"></p>
-
-                        <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
-                        <div class="ui-field-contain">
-                            <label for="pgAddStorageFeature"
-                                >Features<em class="inputRequired">*</em></label
-                            >
-                            <input
-                                type="text"
-                                id="pgAddStorageFeature"
-                                value=""
-                                data-clear-btn="true"
-                                placeholder="Enter storage features..."
-                            />
-                        </div>
-                        <p id="pgAddStorageFeatureAlert" class="alert"></p>
-
-                        <!-- Monthly rent price - required field -->
-                        <div class="ui-field-contain">
-                            <label for="pgAddPrice"
-                                >Monthly price($)<em class="inputRequired"
-                                    >*</em
-                                ></label
-                            >
-                            <input
-                                type="number"
-                                id="pgAddPrice"
-                                value=""
-                                min="0"
-                                data-clear-btn="true"
-                                pattern="[0-9](.[0-9])?"
-                                placeholder="Enter monthly rent price..."
-                            />
-                        </div>
-                        <p id="pgAddPriceAlert" class="alert"></p>
-
-                        <!-- Name of the reporter – required fields -->
-                        <div class="ui-field-contain">
-                            <label for="pgAddReporter"
-                                >Reporter<em class="inputRequired">*</em></label
-                            >
-                            <input
-                                type="text"
-                                id="pgAddReporter"
-                                value=""
-                                data-clear-btn="true"
-                                placeholder="Enter reporter's name..."
-                            />
-                        </div>
-                        <p id="pgAddReporterAlert" class="alert"></p>
-
-                        <!-- Notes – optional field -->
-                        <div class="ui-field-contain">
-                            <label for="pgAddNotes">Notes</label>
-                            <textarea
-                                type="text"
-                                id="pgAddNotes"
-                                value=""
-                                placeholder="Enter your notes..."
-                            ></textarea>
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="btnAddStorage"></label>
+        <div data-role="page" id="pgHome">
+            <div data-role="tabs" id="tabs">
+                <div data-role="navbar" data-iconpos="left">
+                    <ul id="navListItems">
+                        <li>
                             <a
-                                type="submit"
-                                id="btnAddStorage"
-                                style="background-color: royalblue; color: white"
-                                class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left"
-                                onclick="addStorage()"
+                                href="#pgAddStorage"
+                                data-ajax="true"
+                                class="ui-btn-active"
+                                data-icon="plus"
+                                >Add</a
                             >
-                                Add
-                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="#pgListStorage"
+                                data-ajax="true"
+                                data-icon="grid"
+                                id="navViewItem"
+                                >View</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div id="pgAddStorage" class="ui-body-d ui-content">
+                    <form id="formAddStorage">
+                        <div class="ui-grid-solo">
+                            <p style="text-align: right; margin: 8px 0 4px 0">
+                                <em class="inputRequired">*</em> indicates required
+                            </p>
+                            <!-- Storage type (e.g. home, business, etc.) – required field -->
+                            <div class="ui-field-contain">
+                                <label for="pgAddStorageType"
+                                    >Storage type<em class="inputRequired">*</em></label
+                                >
+                                <select id="pgAddStorageType">
+                                    <option value="">Choose option</option>
+                                    <option value="home">Home</option>
+                                    <option value="business">Business</option>
+                                </select>
+                            </div>
+                            <p id="pgAddStorageTypeAlert" class="alert"></p>
+                            <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
+                            <div class="ui-field-contain">
+                                <label for="pgAddDimension"
+                                    >Dimension (m<sup>2</sup>)<em class="inputRequired"
+                                        >*</em
+                                    ></label
+                                >
+                                <input
+                                    type="number"
+                                    id="pgAddDimension"
+                                    value=""
+                                    min="0"
+                                    data-clear-btn="true"
+                                    pattern="[0-9](.[0-9])?"
+                                    placeholder="Enter dimension..."
+                                />
+                            </div>
+                            <p id="pgAddDimensionAlert" class="alert"></p>
+                            <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
+                            <div class="ui-field-contain">
+                                <label>DateTime<em class="inputRequired">*</em></label>
+                                <input
+                                    type="datetime-local"
+                                    data-clear-btn="true"
+                                    id="pgAddDatetime"
+                                    placeholder="Enter date and time of adding the storage..."
+                                    value=""
+                                />
+                            </div>
+                            <p id="pgAddDatetimeAlert" class="alert"></p>
+                            <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
+                            <div class="ui-field-contain">
+                                <label for="pgAddStorageFeature"
+                                    >Features<em class="inputRequired">*</em></label
+                                >
+                                <input
+                                    type="text"
+                                    id="pgAddStorageFeature"
+                                    value=""
+                                    data-clear-btn="true"
+                                    placeholder="Enter storage features..."
+                                />
+                            </div>
+                            <p id="pgAddStorageFeatureAlert" class="alert"></p>
+                            <!-- Monthly rent price - required field -->
+                            <div class="ui-field-contain">
+                                <label for="pgAddPrice"
+                                    >Monthly price($)<em class="inputRequired">*</em></label
+                                >
+                                <input
+                                    type="number"
+                                    id="pgAddPrice"
+                                    value=""
+                                    min="0"
+                                    data-clear-btn="true"
+                                    pattern="[0-9](.[0-9])?"
+                                    placeholder="Enter monthly rent price..."
+                                />
+                            </div>
+                            <p id="pgAddPriceAlert" class="alert"></p>
+                            <!-- Name of the reporter – required fields -->
+                            <div class="ui-field-contain">
+                                <label for="pgAddReporter"
+                                    >Reporter<em class="inputRequired">*</em></label
+                                >
+                                <input
+                                    type="text"
+                                    id="pgAddReporter"
+                                    value=""
+                                    data-clear-btn="true"
+                                    placeholder="Enter reporter's name..."
+                                />
+                            </div>
+                            <p id="pgAddReporterAlert" class="alert"></p>
+
+                            <div class="ui-field-contain">
+                                <label for="pgAddPublicTransport">Public transport</label>
+                                <select
+                                    id="pgAddPublicTransport"
+                                    multiple="multiple"
+                                    data-native-menu="false"
+                                >
+                                    <option value="">Choose options</option>
+                                    <option value="bus">Bus</option>
+                                    <option value="train">Train</option>
+                                    <option value="ferry">Ferry</option>
+                                </select>
+                            </div>
+
+                            <div class="ui-field-contain">
+                                <label for="pgAddShopDistance">Shop distance (m)</label>
+                                <input
+                                    type="number"
+                                    id="pgAddShopDistance"
+                                    value=""
+                                    min="1"
+                                    data-clear-btn="true"
+                                    pattern="[0-9]?"
+                                    placeholder="Enter distance to shops..."
+                                />
+                            </div>
+
+                            <div class="ui-field-contain">
+                                <label for="pgAddCondition">Condition</label>
+                                <input
+                                    type="text"
+                                    id="pgAddCondition"
+                                    value=""
+                                    data-clear-btn="true"
+                                    placeholder="Enter your condition..."
+                                />
+                            </div>
+                            <!-- Notes – optional field -->
+                            <div class="ui-field-contain">
+                                <label for="pgAddNotes">Notes</label>
+                                <textarea
+                                    type="text"
+                                    id="pgAddNotes"
+                                    value=""
+                                    placeholder="Enter your notes..."
+                                ></textarea>
+                            </div>
+                            <!-- image -->
+                            <div class="ui-field-contain">
+                                <label for="pgAddImage">Image</label>
+                                <input
+                                    type="file"
+                                    id="pgAddImage"
+                                    value=""
+                                    placeholder="Enter storage image..."
+                                />
+                            </div>
+                            <!-- image preview -->
+                            <div data-role="fieldcontain">
+                                <label for="pgAddBookImagePreview">Image Preview</label>
+                                <img id="pgAddImagePreview" height="100px" width="100px" src="apps.png" alt="Apps"></img>
+                             </div>
+
+                            <div class="ui-field-contain">
+                                <label for="btnAddStorage"></label>
+                                <a
+                                    id="btnAddStorage"
+                                    style="background-color: royalblue; color: white"
+                                    class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left"
+                                    onclick="addStorage()"
+                                >
+                                    Add
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div data-role="footer" data-position="fixed">
-                <h1>NGUYEN HO HAI PHUOC</h1>
+                    </form>
+                </div>
+                <div id="pgListStorage" class="ui-body-d ui-content">
+                    <form class="ui-filterable">
+                        <input
+                            data-type="search"
+                            id="searchKeyword"
+                            placeholder="Search by storage type..."
+                        />
+                    </form>
+                    <ul
+                        data-role="listview"
+                        data-filter="true"
+                        data-input="#searchKeyword"
+                        data-inset="true"
+                        id="lstStorages"
+                    ></ul>
+                </div>
             </div>
         </div>
-        <div data-role="page" id="pgListStorage">
-            <div data-role="panel" id="panelListStorage">
-                <h1>Menu</h1>
-                <ul data-role="listview" data-inset="true">
-                    <li data-role="list-divider">Storages</li>
-                    <li data-icon="plus"><a href="#pgAddStorage">Add</a></li>
-                    <li data-icon="grid"><a href="#pgListStorage">Load</a></li>
-                </ul>
-            </div>
-            <div data-role="header" data-position="fixed">
+
+        <div data-role="page" id="pgDetailStorage">
+            <div data-role="header">
                 <a
-                    href="#panelListStorage"
-                    class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all ui-shadow"
-                ></a>
-                <h1 class="ui-title">VIEW STORAGE</h1>
+                    href="#pgHome"
+                    class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back"
+                    id="btnBackPgListStorage"
+                    >Back</a
+                >
+                <h2 class="title">Storage Detail</h2>
             </div>
-            <div data-role="main" class="ui-content">
-                <form class="ui-filterable">
-                    <input data-type="search" id="searchKeyword" />
-                </form>
-                <ul
-                    data-role="listview"
-                    data-filter="true"
-                    data-input="#searchKeyword"
-                    data-inset="true"
-                    id="lstStorages"
-                ></ul>
-                <div data-role="popup" id="popupUpdateDeleteStorage">
-                    <div data-role="header">
-                        <a
-                            class="ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all"
-                            data-rel="back"
-                        ></a>
-                        <h1>Options</h1>
-                    </div>
-                    <div data-role="main" class="ui-content">
-                        <a
-                            class="ui-btn ui-icon-delete ui-btn-icon-left ui-btn-inline"
-                            onclick="deleteStorage()"
-                            >Delete</a
-                        >
-                        <a
-                            class="ui-btn ui-icon-edit ui-btn-icon-left ui-btn-inline"
-                            href="#dialogUpdateStorage"
-                            >Update</a
-                        >
-                    </div>
-                    <div data-role="footer" data-position="fixed">
-                        <h1>NGUYEN HO HAI PHUOC</h1>
-                    </div>
+            <div role="main" class="ui-content">
+                <div class="ui-grid-solo" id="detailStorage"></div>
+                <div class="ui-grid-solo" style="text-align:center">
+                    <a
+                        href="#pgUpdateStorage"
+                        class="ui-btn ui-btn-inline ui-icon-edit ui-btn-icon-left ui-corner-all"
+                        id="btnToPgUpdateStorage"
+                        >Edit</a
+                    >
+                    <a
+                        href="#popupDialogDelete"
+                        data-rel="popup"
+                        data-position-to="window"
+                        data-transition="pop"
+                        class="ui-btn ui-btn-inline ui-icon-recycle ui-btn-icon-right ui-corner-all"
+                        >Delete</a
+                    >
                 </div>
             </div>
-            <div data-role="dialog" id="dialogUpdateStorage">
-                <div data-role="header">
-                    <h1>Update storage</h1>
+            <div data-role="footer">
+                <h2>NGUYEN HO HAI PHUOC</h2>
+            </div>
+            <div
+                data-role="popup"
+                id="popupDialogDelete"
+                data-overlay-theme="a"
+                data-theme="a"
+                data-dismissible="true"
+                style="max-width:400px;"
+            >
+                <div data-role="header" data-theme="a">
+                    <h1 style="text-align: left">Delete Storage?</h1>
                 </div>
-                <div data-role="main" class="ui-content">
-                    <form id="formUpdateStorage">
+                <div role="main" class="ui-content">
+                    <h3 class="ui-title">Are you sure you want to delete this storage?</h3>
+                    <p>This action cannot be undone.</p>
+                    <a
+                        href="#"
+                        class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a"
+                        data-rel="back"
+                        >Cancel</a
+                    >
+                    <a
+                        class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a"
+                        data-transition="flow"
+                        onclick="deleteStorage()"
+                        >Delete</a
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="pgUpdateStorage">
+            <div data-role="header">
+                <a
+                    href="#pgDetailStorage"
+                    class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-delete"
+                    >Cancel</a
+                >
+                <h2 class="title">Storage Detail</h2>
+                <button
+                    href="#pgDetailStorage"
+                    class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check"
+                    id="btnUpdateStorage"
+                    onclick="updateStorage()"
+                >
+                    Save
+                </button>
+            </div>
+            <div role="main" class="ui-content detailStorage">
+                <form id="formUpdateStorage">
+                    <div class="ui-grid-solo">
+                        <div class="ui-field-contain">
+                            <label for="pgUpdatePublicTransport">Public transport</label>
+                            <select
+                                id="pgUpdatePublicTransport"
+                                multiple="multiple"
+                                data-native-menu="false"
+                            >
+                                <option value="">Choose options</option>
+                                <option value="bus">Bus</option>
+                                <option value="train">Train</option>
+                                <option value="ferry">Ferry</option>
+                            </select>
+                        </div>
+
+                        <div class="ui-field-contain">
+                            <label for="pgUpdateShopDistance">Shop distance (m)</label>
+                            <input
+                                type="number"
+                                id="pgUpdateShopDistance"
+                                value=""
+                                min="1"
+                                data-clear-btn="true"
+                                pattern="[0-9]?"
+                                placeholder="Enter distance to shops..."
+                            />
+                        </div>
+
+                        <div class="ui-field-contain">
+                            <label for="pgUpdateCondition">Condition</label>
+                            <input
+                                type="text"
+                                id="pgUpdateCondition"
+                                value=""
+                                data-clear-btn="true"
+                                placeholder="Enter your condition..."
+                            />
+                        </div>
                         <!-- Notes – optional field -->
                         <div class="ui-field-contain">
                             <label for="pgUpdateNotes">Notes</label>
                             <textarea
                                 type="text"
-                                name="pgUpdateNotes"
                                 id="pgUpdateNotes"
+                                value=""
+                                placeholder="Enter your notes..."
                             ></textarea>
                         </div>
-                        <div class="ui-field-contain">
-                            <label for="btnUpdateStorage"></label>
-                            <a
-                                type="submit"
-                                id="btnUpdateStorage"
-                                style="background-color: royalblue; color: white"
-                                class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left"
-                                onclick="updateStorage()"
-                            >
-                                Add
-                            </a>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h2>NGUYEN HO HAI PHUOC</h2>
             </div>
         </div>
     </body>

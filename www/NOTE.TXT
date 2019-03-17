@@ -3,3 +3,5 @@ https://www.youtube.com/watch?v=vL2mFknpHnE&index=15&list=PLxyOsIbHSrxmbXmqJ4WmI
 https://mobiscroll.com/pricing#lite
 
 https://stackoverflow.com/questions/14468659/jquery-mobile-document-ready-vs-page-events
+
+https://www.codeproject.com/Articles/896792/Uploading-Displaying-Images-in-a-JQuery-Mobile-App

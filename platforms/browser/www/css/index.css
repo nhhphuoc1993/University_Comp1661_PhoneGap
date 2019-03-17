@@ -17,3 +17,32 @@
     text-align: center;
     vertical-align: text-bottom;
 }
+
+#detailStorage {
+    overflow: hidden;
+}
+
+#detailStorage h4,
+p {
+    /* clear: both; */
+    /* float: left; */
+    max-width: 450px;
+    word-wrap: break-word;
+}
+
+#detailStorage h4 {
+    margin: 16px 0 0 0;
+}
+
+#detailStorage p {
+    border-bottom: 2px solid plum;
+    margin: 8px 0 16px 0;
+}
+
+#lstStorages a p {
+    font-size: 16px;
+}
+
+.field {
+    font-weight: bold;
+}

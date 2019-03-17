@@ -18,11 +18,11 @@
     vertical-align: text-bottom;
 }
 
-.detailStorage {
+#detailStorage {
     overflow: hidden;
 }
 
-.detailStorage h4,
+#detailStorage h4,
 p {
     /* clear: both; */
     /* float: left; */
@@ -30,11 +30,11 @@ p {
     word-wrap: break-word;
 }
 
-.detailStorage h4 {
+#detailStorage h4 {
     margin: 16px 0 0 0;
 }
 
-.detailStorage p {
+#detailStorage p {
     border-bottom: 2px solid plum;
     margin: 8px 0 16px 0;
 }
