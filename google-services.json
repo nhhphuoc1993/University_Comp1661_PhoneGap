@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "584691839604",
+    "firebase_url": "https://comp1661-mobile.firebaseio.com",
+    "project_id": "comp1661-mobile",
+    "storage_bucket": "comp1661-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584691839604:android:756fd26fb19c0841",
+        "android_client_info": {
+          "package_name": "com.fpt.comp1661"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584691839604-m18t94240bi8rluouduhqm1fmm6f7fdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSRqgVPwgOnUL-T6HwkzGq2tkpB601hzo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
