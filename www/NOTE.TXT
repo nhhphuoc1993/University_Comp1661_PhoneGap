@@ -5,3 +5,12 @@ https://mobiscroll.com/pricing#lite
 https://stackoverflow.com/questions/14468659/jquery-mobile-document-ready-vs-page-events
 
 https://www.codeproject.com/Articles/896792/Uploading-Displaying-Images-in-a-JQuery-Mobile-App
+===============================
+https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
+
+https://github.com/raxkaynan/Cordova-Firebase-Upload-File
+
+
+
+?
+https://www.youtube.com/watch?v=8xTGog5DZpI&list=PLzrVYRai0riT4WOQXE-B2IDEkeugarXqM&index=6
