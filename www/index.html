@@ -16,11 +16,11 @@
         <!-- js -->
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <!-- <script src="http://wzrd.in/standalone/uuid%2Fv5@latest"></script> -->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="./js/dbHandler.js"></script>
         <script type="text/javascript" src="./js/storageHandler.js"></script>
         <script type="text/javascript" src="./js/index.js"></script>
-
         <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
         <script>
             // Initialize Firebase
@@ -30,7 +30,7 @@
                 databaseURL: "https://comp1661-mobile.firebaseio.com",
                 projectId: "comp1661-mobile",
                 storageBucket: "comp1661-mobile.appspot.com",
-                messagingSenderId: "584691839604",
+                messagingSenderId: "584691839604"
             };
             firebase.initializeApp(config);
         </script>
@@ -64,12 +64,15 @@
                     <form id="formAddStorage">
                         <div class="ui-grid-solo">
                             <p style="text-align: right; margin: 8px 0 4px 0">
-                                <em class="inputRequired">*</em> indicates required
+                                <em class="inputRequired">*</em> indicates
+                                required
                             </p>
                             <!-- Storage type (e.g. home, business, etc.) – required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageType"
-                                    >Storage type<em class="inputRequired">*</em></label
+                                    >Storage type<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <select id="pgAddStorageType">
                                     <option value="">Choose option</option>
@@ -81,7 +84,8 @@
                             <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddDimension"
-                                    >Dimension (m<sup>2</sup>)<em class="inputRequired"
+                                    >Dimension (m<sup>2</sup>)<em
+                                        class="inputRequired"
                                         >*</em
                                     ></label
                                 >
@@ -98,7 +102,11 @@
                             <p id="pgAddDimensionAlert" class="alert"></p>
                             <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                             <div class="ui-field-contain">
-                                <label>DateTime<em class="inputRequired">*</em></label>
+                                <label
+                                    >DateTime<em class="inputRequired"
+                                        >*</em
+                                    ></label
+                                >
                                 <input
                                     type="datetime-local"
                                     data-clear-btn="true"
@@ -111,7 +119,9 @@
                             <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageFeature"
-                                    >Features<em class="inputRequired">*</em></label
+                                    >Features<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <input
                                     type="text"
@@ -125,7 +135,9 @@
                             <!-- Monthly rent price - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddPrice"
-                                    >Monthly price($)<em class="inputRequired">*</em></label
+                                    >Monthly price($)<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <input
                                     type="number"
@@ -141,7 +153,9 @@
                             <!-- Name of the reporter – required fields -->
                             <div class="ui-field-contain">
                                 <label for="pgAddReporter"
-                                    >Reporter<em class="inputRequired">*</em></label
+                                    >Reporter<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <input
                                     type="text"
@@ -154,7 +168,9 @@
                             <p id="pgAddReporterAlert" class="alert"></p>
 
                             <div class="ui-field-contain">
-                                <label for="pgAddPublicTransport">Public transport</label>
+                                <label for="pgAddPublicTransport"
+                                    >Public transport</label
+                                >
                                 <select
                                     id="pgAddPublicTransport"
                                     multiple="multiple"
@@ -168,7 +184,9 @@
                             </div>
 
                             <div class="ui-field-contain">
-                                <label for="pgAddShopDistance">Shop distance (m)</label>
+                                <label for="pgAddShopDistance"
+                                    >Shop distance (m)</label
+                                >
                                 <input
                                     type="number"
                                     id="pgAddShopDistance"
@@ -212,7 +230,9 @@
                             </div>
                             <!-- image preview -->
                             <div data-role="fieldcontain">
-                                <label for="pgAddBookImagePreview">Image Preview</label>
+                                <label for="pgAddBookImagePreview"
+                                    >Image Preview</label
+                                >
                                 <!-- <img
                                     id="pgAddImagePreview"
                                     height="100px"
@@ -341,7 +361,9 @@
                 <form id="formUpdateStorage">
                     <div class="ui-grid-solo">
                         <div class="ui-field-contain">
-                            <label for="pgUpdatePublicTransport">Public transport</label>
+                            <label for="pgUpdatePublicTransport"
+                                >Public transport</label
+                            >
                             <select
                                 id="pgUpdatePublicTransport"
                                 multiple="multiple"
@@ -355,7 +377,9 @@
                         </div>
 
                         <div class="ui-field-contain">
-                            <label for="pgUpdateShopDistance">Shop distance (m)</label>
+                            <label for="pgUpdateShopDistance"
+                                >Shop distance (m)</label
+                            >
                             <input
                                 type="number"
                                 id="pgUpdateShopDistance"
