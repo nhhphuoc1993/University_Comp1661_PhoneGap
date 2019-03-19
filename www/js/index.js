@@ -27,7 +27,6 @@ function uploadFile(file) {
         });
 }
 
-// https://www.fullstackfirebase.com/firebase-storage/introduction
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -41,6 +40,7 @@ function readURL(input) {
         var cfile = input.files[0];
         console.log(cfile, "cfile");
 
+        console.log(uuidv4());
         // uploadFile(cfile);
     }
 }

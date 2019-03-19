@@ -2,18 +2,8 @@ https://www.youtube.com/watch?v=vL2mFknpHnE&index=15&list=PLxyOsIbHSrxmbXmqJ4WmI
 => installed
 https://github.com/arnesson/cordova-plugin-firebase
 => installed
+// https://www.fullstackfirebase.com/firebase-storage/introduction
+=> used
 
-https://www.codeproject.com/Articles/896792/Uploading-Displaying-Images-in-a-JQuery-Mobile-App
 
 https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
-
-https://github.com/raxkaynan/Cordova-Firebase-Upload-File
-
-
-
-?
-https://www.youtube.com/watch?v=8xTGog5DZpI&list=PLzrVYRai0riT4WOQXE-B2IDEkeugarXqM&index=6
-
-1
-https://stackoverflow.com/questions/37444685/store-files-with-unique-random-names
-https://github.com/kelektiv/node-uuid
