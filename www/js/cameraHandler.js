@@ -1,35 +1,51 @@
 let cameraHandler = {
-    takePhoto: function() {
-        let opts = {
-            quality: 100,
-            destinationType: Camera.DestinationType.FILE_URI,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            mediaType: Camera.MediaType.PICTURE,
-            encodingType: Camera.EncodingType.JPEG,
-            cameraDirection: Camera.Direction.BACK,
-            targetWidth: 0,
-            targetHeight: 0
+    // Some common settings are 20, 50, and 100
+    quality: 100,
+    destinationType: Camera.DestinationType.FILE_URI,
+    // In this app, dynamically set the picture source, Camera or photo gallery
+    sourceType: srcType,
+    // JPEG is the recommended encoding type for Android
+    encodingType: Camera.EncodingType.JPEG,
+    mediaType: Camera.MediaType.PICTURE,
+    //Corrects Android orientation quirks
+    correctOrientation: true,
+    setOptions: function(srcType) {
+        return {
+            quality: this.quality,
+            destinationType: this.destinationType,
+            sourceType: srcType,
+            encoding: this.encodingType,
+            mediaType: this.mediaType,
+            correctOrientation: true
         };
-        navigator.camera.getPicture(cameraHandler.ftw, cameraHandler.wtf, opts);
     },
-    selectPhoto: function() {
-        let opts = {
-            sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
-            targetWidth: 0,
-            targetHeight: 0
-        };
+    openCamera: function() {
+        let srcType = Camera.PictureSourceType.CAMERA;
+        let options = setOptions(srcType);
+
         navigator.camera.getPicture(
-            (cameraSuccess = imageUri => {
-                document.getElementById("photo").src = imageUri;
-            }),
-            (cameraError = error => {
-                alert("Unable to obtain picture: " + error, "app");
-            }),
-            opts
+            function cameraSuccess(imageUri) {
+                console.log(imageUri, "openCamera/imageUri");
+                displayImage(imageUri);
+            },
+            function cameraError(error) {
+                console.log("Unable to obtain picture: " + error, "app");
+            },
+            options
         );
     },
-    ftw: imgURI => {
-        document.getElementById("photo").src = imgURI;
-    },
-    wtf: msg => {}
+    openFilePicker: function() {
+        let srcType = Camera.PictureSourceType.SAVEDPHOTOALBUM;
+        let options = setOptions(srcType);
+
+        navigator.camera.getPicture(
+            function cameraSuccess(imageUri) {
+                console.log(imageUri, "openFilePicker/imageUri");
+            },
+            function cameraError(error) {
+                console.log("Unable to obtain picture: " + error, "app");
+            },
+            options
+        );
+    }
 };
