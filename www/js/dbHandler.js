@@ -3,7 +3,7 @@ var dbVersion = "1.0";
 var dbDescribe = "Comp 1661 Web SQL Database";
 var dbSize = 1 * (1024 * 1024);
 
-var databaseHandler = {
+let databaseHandler = {
     db: null,
     createDatabase: function() {
         this.db = window.openDatabase(dbName, dbVersion, dbDescribe, dbSize);
@@ -15,16 +15,20 @@ var databaseHandler = {
                     [],
                     function(tx, results) {},
                     function(tx, error) {
-                        console.log("Error while creating the table: " + error.message);
-                    },
+                        console.log(
+                            "Error while creating the table: " + error.message
+                        );
+                    }
                 );
             },
             function(error) {
                 console.log("Transaction error: " + error.message);
             },
             function() {
-                console.log("Create or load DB transaction completed successfully");
-            },
+                console.log(
+                    "Create or load DB transaction completed successfully"
+                );
+            }
         );
-    },
+    }
 };

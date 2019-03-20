@@ -1,4 +1,4 @@
-var storageHandler = {
+let storageHandler = {
     addStorage: function(
         storageType,
         dimension,
