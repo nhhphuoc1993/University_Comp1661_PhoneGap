@@ -1,8 +1,3 @@
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-    console.log(navigator.camera);
-}
-
 $(document).on("pagebeforeshow", "#pgHome", function() {
     databaseHandler.createDatabase();
     storageHandler.loadStorages(displayStorages);
@@ -13,36 +8,7 @@ $(document).on("pagebeforeshow", "#pgHome", function() {
     $("#navViewItem").on("vclick", function() {
         storageHandler.loadStorages(displayStorages);
     });
-    $("input[type=file]").change(function() {
-        readURL(this);
-    });
 });
-
-function displayPic() {
-    var imgUri = "./img/a.jpg";
-    var elem = document.getElementById("displayPic");
-    elem.src = imgUri;
-}
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            $("#pgAddBookImagePreview").attr("src", e.target.result);
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-function openCameraToAdd() {
-    cameraHandler.takePicture();
-}
-
-function selecPictureToAdd() {
-    cameraHandler.selectPicture();
-}
 
 function addStorage() {
     let storageType = $("#pgAddStorageType").val();
@@ -54,9 +20,18 @@ function addStorage() {
     let notes = $("#pgAddNotes").val();
     let condition = $("#pgAddCondition").val();
     let shopDistance = $("#pgAddShopDistance").val();
-    let publicTransport = $("#pgAddPublicTransport").val() ? $("#pgAddPublicTransport").val() : "";
+    let publicTransport = $("#pgAddPublicTransport").val()
+        ? $("#pgAddPublicTransport").val()
+        : "";
 
-    if (!storageType || !dimension || !addingDatetime || !storageFeature || !price || !reporter) {
+    if (
+        !storageType ||
+        !dimension ||
+        !addingDatetime ||
+        !storageFeature ||
+        !price ||
+        !reporter
+    ) {
         event.preventDefault();
         const emptyAlert = "This field cannot be empty!";
         // storage type alert
@@ -66,7 +41,9 @@ function addStorage() {
         // datetime alert
         $("#pgAddDatetimeAlert").text(addingDatetime == "" ? emptyAlert : "");
         // storage feature alert
-        $("#pgAddStorageFeatureAlert").text(storageFeature == "" ? emptyAlert : "");
+        $("#pgAddStorageFeatureAlert").text(
+            storageFeature == "" ? emptyAlert : ""
+        );
         // price alert
         $("#pgAddPriceAlert").text(price == "" ? emptyAlert : "");
         // reporter alert
@@ -82,7 +59,7 @@ function addStorage() {
             notes,
             condition,
             shopDistance,
-            publicTransport,
+            publicTransport
         );
 
         $(`#pgAddStorageType option[value='']`).attr("selected", "selected");
@@ -113,7 +90,7 @@ let currentStorage = {
     notes: "",
     condition: "",
     shopDistance: -1,
-    publicTransport: "",
+    publicTransport: ""
 };
 
 function displayStorages(results) {
@@ -150,12 +127,18 @@ function displayStorages(results) {
                         <span class="field">Reporter:</span>
                         <span name="reporter">${item.reporter}</span>
                     </p>
-                    <p name="condition" class="ui-hidden-accessible">${item.condition}</p>
-                    <p name="distance" class="ui-hidden-accessible">${item.shopDistance}</p>
+                    <p name="condition" class="ui-hidden-accessible">${
+                        item.condition
+                    }</p>
+                    <p name="distance" class="ui-hidden-accessible">${
+                        item.shopDistance
+                    }</p>
                     <p name="publicTransport" class="ui-hidden-accessible">
                         ${item.publicTransport}
                     </p>
-                    <p name="notes" class="ui-hidden-accessible">${item.notes}</p>
+                    <p name="notes" class="ui-hidden-accessible">${
+                        item.notes
+                    }</p>
                 </a>
             </li>
         `;
@@ -235,7 +218,7 @@ function deleteStorage() {
     $.mobile.changePage("#pgHome", {
         transition: "pop",
         reverse: false,
-        changeHash: false,
+        changeHash: false
     });
 }
 
@@ -245,7 +228,10 @@ $(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
         : "";
     if (publicTransportOptions.length > 0) {
         $.each(publicTransportOptions, function(i, v) {
-            $("#pgUpdatePublicTransport option[value='" + v + "']").prop("selected", true);
+            $("#pgUpdatePublicTransport option[value='" + v + "']").prop(
+                "selected",
+                true
+            );
             $("#pgUpdatePublicTransport").selectmenu("refresh");
         });
     }
@@ -265,7 +251,7 @@ function updateStorage() {
         newNotes,
         newCondition,
         newShopDistance,
-        newPublicTransport,
+        newPublicTransport
     );
     currentStorage.notes = newNotes;
     currentStorage.condition = newCondition;
@@ -274,6 +260,6 @@ function updateStorage() {
     $.mobile.changePage("#pgDetailStorage", {
         transition: "pop",
         reverse: false,
-        changeHash: false,
+        changeHash: false
     });
 }
