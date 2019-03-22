@@ -16,10 +16,13 @@ $(document).on("pagebeforeshow", "#pgHome", function() {
     $("input[type=file]").change(function() {
         readURL(this);
     });
-    $("#test").on("vclick", function() {
-        readURL(this);
-    });
 });
+
+function displayPic() {
+    var imgUri = "./img/a.jpg";
+    var elem = document.getElementById("displayPic");
+    elem.src = imgUri;
+}
 
 function readURL(input) {
     if (input.files && input.files[0]) {
