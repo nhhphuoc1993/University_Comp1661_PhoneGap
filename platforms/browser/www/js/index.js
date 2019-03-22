@@ -1,5 +1,4 @@
 $(document).on("pagebeforeshow", "#pgHome", function() {
-    console.log("pagebeforeshow", "| #pgHome");
     databaseHandler.createDatabase();
     storageHandler.loadStorages(displayStorages);
     $("#tabs #navListItems li a").on("vclick", function() {
@@ -7,42 +6,37 @@ $(document).on("pagebeforeshow", "#pgHome", function() {
         $(this).addClass("ui-state-persist");
     });
     $("#navViewItem").on("vclick", function() {
-        console.log("vclick", "| #navViewItem");
         storageHandler.loadStorages(displayStorages);
     });
     $("input[type=file]").change(function() {
         readURL(this);
     });
+    $("#test").on("vclick", function() {
+        readURL(this);
+    });
+    $("#test1").change(function() {
+        readURL(this);
+    });
 });
-
-function uploadFile(file) {
-    return firebase
-        .storage()
-        .ref()
-        .child("images/image.jpg")
-        .put(file)
-        .then(snapshot => {
-            // snapshot represents the uploaded file
-            console.log(snapshot, "snapshot");
-        });
-}
 
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            $("#blah").attr("src", e.target.result);
+            $("#pgAddBookImagePreview").attr("src", e.target.result);
         };
 
         reader.readAsDataURL(input.files[0]);
-
-        var cfile = input.files[0];
-        console.log(cfile, "cfile");
-
-        console.log(uuidv4());
-        // uploadFile(cfile);
     }
+}
+
+function openCameraToAdd() {
+    cameraHandler.takePicture();
+}
+
+function selecPictureToAdd() {
+    cameraHandler.selectPicture();
 }
 
 function addStorage() {

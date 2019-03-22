@@ -16,24 +16,11 @@
         <!-- js -->
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="./js/dbHandler.js"></script>
+        <script type="text/javascript" src="./js/camHandler.js"></script>
         <script type="text/javascript" src="./js/storageHandler.js"></script>
         <script type="text/javascript" src="./js/index.js"></script>
-        <script src="http://wzrd.in/standalone/uuid%2Fv4@latest"></script>
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyDQvGCneeUZvaYoiUGytoKi78nBhExtAec",
-                authDomain: "comp1661-mobile.firebaseapp.com",
-                databaseURL: "https://comp1661-mobile.firebaseio.com",
-                projectId: "comp1661-mobile",
-                storageBucket: "comp1661-mobile.appspot.com",
-                messagingSenderId: "584691839604",
-            };
-            firebase.initializeApp(config);
-        </script>
+        <script type="text/javascript" src="cordova.js"></script>
     </head>
     <body>
         <div data-role="page" id="pgHome">
@@ -202,20 +189,32 @@
                             </div>
                             <!-- image -->
                             <div class="ui-field-contain">
-                                <label for="pgAddImage">Image</label>
+                                <label>Image</label>
+                                <button
+                                    class="ui-btn ui-btn-inline"
+                                    id="pgAddTakePicBtn"
+                                    onclick="openCameraToAdd()"
+                                >
+                                    Take a picture
+                                </button>
+                                <button
+                                    class="ui-btn ui-btn-inline"
+                                    id="pgAddSelectPicBtn"
+                                    onclick="selecPictureToAdd()"
+                                >
+                                    Select from your gallery
+                                </button>
+                                <button class="ui-btn ui-btn-inline" id="test">
+                                    test
+                                </button>
                                 <input
                                     type="file"
                                     id="pgAddImage"
                                     value=""
                                     placeholder="Enter storage image..."
                                 />
+                                <img id="pgAddBookImagePreview" src="" />
                             </div>
-                            <!-- image preview -->
-                            <div data-role="fieldcontain">
-                                <label for="pgAddBookImagePreview">Image Preview</label>
-                                <img id="blah" src="#" alt="your image" />
-                            </div>
-
                             <div class="ui-field-contain">
                                 <label for="btnAddStorage"></label>
                                 <a
