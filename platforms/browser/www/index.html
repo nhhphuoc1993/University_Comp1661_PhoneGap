@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="default-src 'self' data: gap: ms-appdata: https://ssl.gstatic.com 'unsafe-eval'; media-src *; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
-            style-src  'self' 'unsafe-inline' *"
-        />
-        <meta
-            name="viewport"
-            content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"
-        />
-        <title>Storage App</title>
-        <!-- css -->
-        <link rel="stylesheet" type="text/css" href="./css/index.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
             rel="stylesheet"
             href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
         />
+        <link rel="stylesheet" href="css/index.css" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/dbHandler.js"></script>
+        <script type="text/javascript" src="js/storageHandler.js"></script>
+        <script type="text/javascript" src="js/camHandler.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
     </head>
     <body>
         <div data-role="page" id="pgHome">
@@ -48,15 +44,12 @@
                     <form id="formAddStorage">
                         <div class="ui-grid-solo">
                             <p style="text-align: right; margin: 8px 0 4px 0">
-                                <em class="inputRequired">*</em> indicates
-                                required
+                                <em class="inputRequired">*</em> indicates required
                             </p>
                             <!-- Storage type (e.g. home, business, etc.) – required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageType"
-                                    >Storage type<em class="inputRequired"
-                                        >*</em
-                                    ></label
+                                    >Storage type<em class="inputRequired">*</em></label
                                 >
                                 <select id="pgAddStorageType">
                                     <option value="">Choose option</option>
@@ -68,8 +61,7 @@
                             <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddDimension"
-                                    >Dimension (m<sup>2</sup>)<em
-                                        class="inputRequired"
+                                    >Dimension (m<sup>2</sup>)<em class="inputRequired"
                                         >*</em
                                     ></label
                                 >
@@ -86,11 +78,7 @@
                             <p id="pgAddDimensionAlert" class="alert"></p>
                             <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                             <div class="ui-field-contain">
-                                <label
-                                    >DateTime<em class="inputRequired"
-                                        >*</em
-                                    ></label
-                                >
+                                <label>DateTime<em class="inputRequired">*</em></label>
                                 <input
                                     type="datetime-local"
                                     data-clear-btn="true"
@@ -103,9 +91,7 @@
                             <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageFeature"
-                                    >Features<em class="inputRequired"
-                                        >*</em
-                                    ></label
+                                    >Features<em class="inputRequired">*</em></label
                                 >
                                 <input
                                     type="text"
@@ -119,9 +105,7 @@
                             <!-- Monthly rent price - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddPrice"
-                                    >Monthly price($)<em class="inputRequired"
-                                        >*</em
-                                    ></label
+                                    >Monthly price($)<em class="inputRequired">*</em></label
                                 >
                                 <input
                                     type="number"
@@ -137,9 +121,7 @@
                             <!-- Name of the reporter – required fields -->
                             <div class="ui-field-contain">
                                 <label for="pgAddReporter"
-                                    >Reporter<em class="inputRequired"
-                                        >*</em
-                                    ></label
+                                    >Reporter<em class="inputRequired">*</em></label
                                 >
                                 <input
                                     type="text"
@@ -152,9 +134,7 @@
                             <p id="pgAddReporterAlert" class="alert"></p>
 
                             <div class="ui-field-contain">
-                                <label for="pgAddPublicTransport"
-                                    >Public transport</label
-                                >
+                                <label for="pgAddPublicTransport">Public transport</label>
                                 <select
                                     id="pgAddPublicTransport"
                                     multiple="multiple"
@@ -168,9 +148,7 @@
                             </div>
 
                             <div class="ui-field-contain">
-                                <label for="pgAddShopDistance"
-                                    >Shop distance (m)</label
-                                >
+                                <label for="pgAddShopDistance">Shop distance (m)</label>
                                 <input
                                     type="number"
                                     id="pgAddShopDistance"
@@ -205,14 +183,17 @@
                             <!-- image -->
                             <div class="ui-field-contain">
                                 <label for="btnAddImage">Image</label>
-                                <button
-                                    class="ui-btn ui-btn-inline ui-corner-all"
-                                    id="btnAddImage"
-                                >
+                                <button id="btnAddImage" class="ui-btn ui-btn-inline ui-corner-all">
                                     Take Picture
                                 </button>
+                                <button
+                                    id="btnAddImageFromGallery"
+                                    class="ui-btn ui-btn-inline ui-corner-all"
+                                >
+                                    Select Picture from Gallery
+                                </button>
                                 <p id="msgAddImage"></p>
-                                <img id="photoAddImage" alt="image" src="" />
+                                <img id="photoAddImage" alt="" src="" />
                             </div>
                             <div class="ui-field-contain">
                                 <label for="btnAddStorage"></label>
@@ -332,9 +313,7 @@
                 <form id="formUpdateStorage">
                     <div class="ui-grid-solo">
                         <div class="ui-field-contain">
-                            <label for="pgUpdatePublicTransport"
-                                >Public transport</label
-                            >
+                            <label for="pgUpdatePublicTransport">Public transport</label>
                             <select
                                 id="pgUpdatePublicTransport"
                                 multiple="multiple"
@@ -348,9 +327,7 @@
                         </div>
 
                         <div class="ui-field-contain">
-                            <label for="pgUpdateShopDistance"
-                                >Shop distance (m)</label
-                            >
+                            <label for="pgUpdateShopDistance">Shop distance (m)</label>
                             <input
                                 type="number"
                                 id="pgUpdateShopDistance"
@@ -389,49 +366,5 @@
                 <h2>NGUYEN HO HAI PHUOC</h2>
             </div>
         </div>
-        <!-- <script type="text/javascript" src="cordova.js"></script> -->
-        <script
-            type="text/javascript"
-            src="../platforms/browser/www/cordova.js"
-        ></script>
-        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <script type="text/javascript" src="./js/dbHandler.js"></script>
-        <script type="text/javascript" src="./js/storageHandler.js"></script>
-        <script type="text/javascript" src="./js/index.js"></script>
-        <script>
-            let cameraHandler = {
-                init: function() {
-                    document
-                        .getElementById("btnAddImage")
-                        .addEventListener("click", cameraHandler.takephoto);
-                },
-                takephoto: function() {
-                    let opts = {
-                        quality: 100,
-                        destinationType: Camera.DestinationType.FILE_URI,
-                        sourceType: Camera.PictureSourceType.CAMERA,
-                        mediaType: Camera.MediaType.PICTURE,
-                        encodingType: Camera.EncodingType.JPEG,
-                        cameraDirection: Camera.Direction.BACK,
-                        targetWidth: 0,
-                        targetHeight: 0
-                    };
-                    navigator.camera.getPicture(
-                        cameraHandler.ftw,
-                        cameraHandler.wtf,
-                        opts
-                    );
-                },
-                ftw: function(imgURI) {
-                    document.getElementById("msgAddImage").textContent = imgURI;
-                    document.getElementById("photoAddImage").src = imgURI;
-                },
-                wtf: function(error) {
-                    document.getElementById("msgAddImage").textContent = error;
-                }
-            };
-            document.addEventListener("deviceready", cameraHandler.init);
-        </script>
     </body>
 </html>

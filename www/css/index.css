@@ -4,6 +4,11 @@
     font-size: 15px;
 }
 
+#photoAddImage {
+    max-width: 100%;
+    max-height: auto;
+}
+
 .inputRequired {
     color: red;
 }
