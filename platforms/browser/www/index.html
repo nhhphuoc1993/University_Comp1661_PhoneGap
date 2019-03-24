@@ -23,16 +23,16 @@
                         <li>
                             <a
                                 href="#pgAddStorage"
-                                data-ajax="true"
-                                class="ui-btn-active"
+                                data-ajax="false"
                                 data-icon="plus"
+                                id="navAddItem"
                                 >Add</a
                             >
                         </li>
                         <li>
                             <a
                                 href="#pgListStorage"
-                                data-ajax="true"
+                                data-ajax="false"
                                 data-icon="grid"
                                 id="navViewItem"
                                 >View</a
@@ -43,7 +43,7 @@
                 <div id="pgAddStorage" class="ui-body-d ui-content">
                     <form id="formAddStorage">
                         <div class="ui-grid-solo">
-                            <p style="text-align: right; margin: 8px 0 4px 0">
+                            <p style="text-align: right;">
                                 <em class="inputRequired">*</em> indicates required
                             </p>
                             <!-- Storage type (e.g. home, business, etc.) – required field -->
@@ -56,8 +56,8 @@
                                     <option value="home">Home</option>
                                     <option value="business">Business</option>
                                 </select>
+                                <p id="pgAddStorageTypeAlert" class="alert"></p>
                             </div>
-                            <p id="pgAddStorageTypeAlert" class="alert"></p>
                             <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddDimension"
@@ -74,8 +74,8 @@
                                     pattern="[0-9](.[0-9])?"
                                     placeholder="Enter dimension..."
                                 />
+                                <p id="pgAddDimensionAlert" class="alert"></p>
                             </div>
-                            <p id="pgAddDimensionAlert" class="alert"></p>
                             <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                             <div class="ui-field-contain">
                                 <label>DateTime<em class="inputRequired">*</em></label>
@@ -86,8 +86,8 @@
                                     placeholder="Enter date and time of adding the storage..."
                                     value=""
                                 />
+                                <p id="pgAddDatetimeAlert" class="alert"></p>
                             </div>
-                            <p id="pgAddDatetimeAlert" class="alert"></p>
                             <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageFeature"
@@ -100,8 +100,8 @@
                                     data-clear-btn="true"
                                     placeholder="Enter storage features..."
                                 />
+                                <p id="pgAddStorageFeatureAlert" class="alert"></p>
                             </div>
-                            <p id="pgAddStorageFeatureAlert" class="alert"></p>
                             <!-- Monthly rent price - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddPrice"
@@ -116,8 +116,8 @@
                                     pattern="[0-9](.[0-9])?"
                                     placeholder="Enter monthly rent price..."
                                 />
+                                <p id="pgAddPriceAlert" class="alert"></p>
                             </div>
-                            <p id="pgAddPriceAlert" class="alert"></p>
                             <!-- Name of the reporter – required fields -->
                             <div class="ui-field-contain">
                                 <label for="pgAddReporter"
@@ -192,8 +192,8 @@
                                 >
                                     Select Picture from Gallery
                                 </button>
-                                <p id="msgAddImage"></p>
-                                <img id="photoAddImage" alt="" src="" />
+                                <p id="pgAddImgURI"></p>
+                                <img id="pgAddImagePhoto" alt="" src="" />
                             </div>
                             <div class="ui-field-contain">
                                 <label for="btnAddStorage"></label>

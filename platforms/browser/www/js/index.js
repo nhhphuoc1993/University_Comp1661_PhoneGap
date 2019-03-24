@@ -1,13 +1,9 @@
 $(document).on("pagebeforeshow", "#pgHome", function() {
     databaseHandler.createDatabase();
     storageHandler.loadStorages(displayStorages);
-    $("#tabs #navListItems li a").on("vclick", function() {
-        $("#tabs #navListItems li a").removeClass("ui-state-persist");
-        $(this).addClass("ui-state-persist");
-    });
-    $("#navViewItem").on("vclick", function() {
-        storageHandler.loadStorages(displayStorages);
-    });
+
+    activeViewStorageTab();
+
     $("#btnAddImage").on("vclick", function() {
         event.preventDefault();
         // cameraHandler.takephoto();
@@ -31,27 +27,21 @@ function addStorage() {
     let condition = $("#pgAddCondition").val();
     let shopDistance = $("#pgAddShopDistance").val();
     let publicTransport = $("#pgAddPublicTransport").val() ? $("#pgAddPublicTransport").val() : "";
+    let imgURI = $("#pgAddImgURI").text();
+    let isAddStorage = validateAddStorageForm(
+        storageType,
+        dimension,
+        addingDatetime,
+        storageFeature,
+        price,
+        reporter,
+    );
 
-    if (!storageType || !dimension || !addingDatetime || !storageFeature || !price || !reporter) {
-        event.preventDefault();
-        const emptyAlert = "This field cannot be empty!";
-        // storage type alert
-        $("#pgAddStorageTypeAlert").text(storageType == "" ? emptyAlert : "");
-        // dimension alert
-        $("#pgAddDimensionAlert").text(dimension == "" ? emptyAlert : "");
-        // datetime alert
-        $("#pgAddDatetimeAlert").text(addingDatetime == "" ? emptyAlert : "");
-        // storage feature alert
-        $("#pgAddStorageFeatureAlert").text(storageFeature == "" ? emptyAlert : "");
-        // price alert
-        $("#pgAddPriceAlert").text(price == "" ? emptyAlert : "");
-        // reporter alert
-        $("#pgAddReporterAlert").text(reporter == "" ? emptyAlert : "");
-    } else {
+    if (isAddStorage === true) {
         storageHandler.addStorage(
             storageType,
             dimension,
-            addingDatetime,
+            new Date(addingDatetime).toUTCString(),
             storageFeature,
             price,
             reporter,
@@ -59,27 +49,100 @@ function addStorage() {
             condition,
             shopDistance,
             publicTransport,
+            imgURI,
         );
-
-        $(`#pgAddStorageType option[value='']`).attr("selected", "selected");
-        $("#pgAddStorageType").selectmenu("refresh");
-
-        $("#pgAddDimension").val(null);
-        $("#pgAddDatetime").val(null);
-        $("#pgAddStorageFeature").val(null);
-        $("#pgAddPrice").val(null);
-        $("#pgAddReporter").val(null);
-        $("#pgAddNotes").val(null);
-        $("#pgAddCondition").val(null);
-        $("#pgAddShopDistance").val(null);
-
-        $(`#pgAddPublicTransport option:selected`).removeAttr("selected");
-        $("#pgAddPublicTransport").selectmenu("refresh");
+    } else {
+        event.preventDefault();
     }
 }
 
+function validateAddStorageForm(
+    storageType,
+    dimension,
+    addingDatetime,
+    storageFeature,
+    price,
+    reporter,
+) {
+    let result = true;
+
+    const emptyAlert = "This field cannot be empty!";
+    const invalidDateAlert = "Invalid datetime!";
+    let pgAddStorageTypeAlert = "";
+    let pgAddDimensionAlert = "";
+    let pgAddDatetimeAlert = "";
+    let pgAddStorageFeatureAlert = "";
+    let pgAddPriceAlert = "";
+    let pgAddReporterAlert = "";
+
+    if (!storageType) {
+        pgAddStorageTypeAlert = emptyAlert;
+        result = false;
+    }
+
+    if (!dimension) {
+        pgAddDimensionAlert = emptyAlert;
+        result = false;
+    }
+
+    if (!addingDatetime) {
+        pgAddDatetimeAlert = emptyAlert;
+        result = false;
+    } else {
+        if (
+            addingDatetime.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/g) === null ||
+            new Date(addingDatetime) > new Date()
+        ) {
+            pgAddDatetimeAlert = invalidDateAlert;
+            result = false;
+        }
+    }
+
+    if (!storageFeature) {
+        pgAddStorageFeatureAlert = emptyAlert;
+        result = false;
+    }
+
+    if (!price) {
+        pgAddPriceAlert = emptyAlert;
+        result = false;
+    }
+
+    if (!reporter) {
+        pgAddReporterAlert = emptyAlert;
+        result = false;
+    }
+
+    $("#pgAddStorageTypeAlert").text(pgAddStorageTypeAlert);
+    $("#pgAddDimensionAlert").text(pgAddDimensionAlert);
+    $("#pgAddDatetimeAlert").text(pgAddDatetimeAlert);
+    $("#pgAddStorageFeatureAlert").text(pgAddStorageFeatureAlert);
+    $("#pgAddPriceAlert").text(pgAddPriceAlert);
+    $("#pgAddReporterAlert").text(pgAddReporterAlert);
+
+    return result;
+}
+
+function resetPageAddStorageInput() {
+    $(`#pgAddStorageType option[value='']`).attr("selected", "selected");
+    $("#pgAddStorageType").selectmenu("refresh");
+
+    $("#pgAddDimension").val(null);
+    $("#pgAddDatetime").val(null);
+    $("#pgAddStorageFeature").val(null);
+    $("#pgAddPrice").val(null);
+    $("#pgAddReporter").val(null);
+    $("#pgAddNotes").val(null);
+    $("#pgAddCondition").val(null);
+    $("#pgAddShopDistance").val(null);
+    $("#pgAddImgURI").val(null);
+    $("#pgAddImagePhoto").attr("src", "");
+
+    $(`#pgAddPublicTransport option:selected`).removeAttr("selected");
+    $("#pgAddPublicTransport").selectmenu("refresh");
+}
+
 let currentStorage = {
-    id: -1,
     storageType: "",
     dimension: -1,
     addingDatetime: "",
@@ -90,6 +153,7 @@ let currentStorage = {
     condition: "",
     shopDistance: -1,
     publicTransport: "",
+    imgURI: "",
 };
 
 function displayStorages(results) {
@@ -98,10 +162,11 @@ function displayStorages(results) {
     lstStorages.empty(); //Clean the old data before adding.
     for (let i = 0; i < length; i++) {
         let item = results.rows.item(i);
+        let datetimeObj = new Date(item.addingDatetime);
+        let imgURI = item.imgURI ? item.imgURI : "";
         elementStorage = `
             <li>
                 <a href="#pgDetailStorage">
-                    <p name="_id" class="ui-hidden-accessible">${item._id}</p>
                     <p>
                         <span class="field">Storage type: </span>
                         <span name="type">${item.storageType}</span>
@@ -111,8 +176,9 @@ function displayStorages(results) {
                         <span name="dimension">${item.dimension}</span>
                     </p>
                     <p>
-                        <span class="field">Date and time:</span>
-                        <span name="datetime">${item.addingDatetime}</span>
+                        <span class="field">Datetime:</span>
+                        <span name="datetime">${datetimeObj.getDate()}/${datetimeObj.getMonth() +
+            1}/${datetimeObj.getFullYear()}, ${datetimeObj.getHours()}:${datetimeObj.getMinutes()}</span>
                     </p>
                     <p>
                         <span class="field">Feature:</span>
@@ -132,6 +198,7 @@ function displayStorages(results) {
                         ${item.publicTransport}
                     </p>
                     <p name="notes" class="ui-hidden-accessible">${item.notes}</p>
+                    <p name="image" class="ui-hidden-accessible">${imgURI}</p>
                 </a>
             </li>
         `;
@@ -142,9 +209,6 @@ function displayStorages(results) {
     lstStorages.listview("refresh");
 
     lstStorages.on("vclick", "li", function() {
-        currentStorage.id = $(this)
-            .find("[name='_id']")
-            .text();
         currentStorage.storageType = $(this)
             .find("[name='type']")
             .text();
@@ -175,12 +239,23 @@ function displayStorages(results) {
         currentStorage.publicTransport = $(this)
             .find("[name='publicTransport']")
             .text();
+        currentStorage.publicTransport = $(this)
+            .find("[name='publicTransport']")
+            .text();
+        currentStorage.imgURI = $(this)
+            .find("[name='image']")
+            .text();
     });
 }
 
 $(document).on("pagebeforeshow", "#pgDetailStorage", function() {
     let detailStorage = $("#detailStorage");
     detailStorage.empty(); //Clean the old data before
+    let imgURI = currentStorage.imgURI
+        ? `<img id="detailStorageImage" alt="${currentStorage.imgURI}" src="${
+              currentStorage.imgURI
+          }" />`
+        : "";
     elementDetailStorage = `
         <h4>Storage type:</h4>
         <p>${currentStorage.storageType}</p>
@@ -202,12 +277,24 @@ $(document).on("pagebeforeshow", "#pgDetailStorage", function() {
         <p>${currentStorage.publicTransport}</p>
         <h4>Notes:</h4>
         <p id="detailStorageNotes">${currentStorage.notes}</p>
+        <h4>Image:</h4>
+        <p>${imgURI}</p>
     `;
     detailStorage.append(elementDetailStorage);
 });
 
 function deleteStorage() {
-    storageHandler.deleteStorage(currentStorage.id);
+    storageHandler.deleteStorage(
+        currentStorage.storageType,
+        currentStorage.dimension,
+        currentStorage.datetime,
+        currentStorage.storageFeature,
+        currentStorage.price,
+        currentStorage.reporter,
+    );
+}
+
+function changeToHomePage() {
     $.mobile.changePage("#pgHome", {
         transition: "pop",
         reverse: false,
@@ -216,15 +303,14 @@ function deleteStorage() {
 }
 
 $(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
-    let publicTransportOptions = currentStorage.publicTransport
-        ? currentStorage.publicTransport.trim().split(",")
-        : "";
-    if (publicTransportOptions.length > 0) {
-        $.each(publicTransportOptions, function(i, v) {
-            $("#pgUpdatePublicTransport option[value='" + v + "']").prop("selected", true);
-            $("#pgUpdatePublicTransport").selectmenu("refresh");
+    let currentPublicTransport = currentStorage.publicTransport.trim();
+    $("select#pgUpdatePublicTransport option").attr("selected", false);
+    if (currentPublicTransport !== "") {
+        $.each(currentPublicTransport.split(","), function(i, v) {
+            $("#pgUpdatePublicTransport option[value='" + v.trim() + "']").prop("selected", true);
         });
     }
+    $("#pgUpdatePublicTransport").selectmenu("refresh");
 
     $("#pgUpdateShopDistance").val(currentStorage.shopDistance);
     $("#pgUpdateCondition").val(currentStorage.condition);
@@ -236,17 +322,53 @@ function updateStorage() {
     let newCondition = $("#pgUpdateCondition").val();
     let newShopDistance = $("#pgUpdateShopDistance").val();
     let newPublicTransport = $("#pgUpdatePublicTransport").val();
+    newPublicTransport = newPublicTransport
+        ? newPublicTransport.filter(i => i !== "").join(",")
+        : "";
     storageHandler.updateStorage(
-        currentStorage.id,
         newNotes,
         newCondition,
         newShopDistance,
         newPublicTransport,
+        currentStorage.storageType,
+        currentStorage.dimension,
+        currentStorage.datetime,
+        currentStorage.storageFeature,
+        currentStorage.price,
+        currentStorage.reporter,
     );
-    currentStorage.notes = newNotes;
-    currentStorage.condition = newCondition;
-    currentStorage.shopDistance = newShopDistance;
-    currentStorage.publicTransport = newPublicTransport.join(",");
+}
+
+function activeViewStorageTab() {
+    $("#navViewItem").click();
+    $("#navViewItem").addClass("ui-btn-active ui-state-persist");
+}
+
+function changeToDetailPage(
+    storageType,
+    dimension,
+    addingDatetime,
+    storageFeature,
+    price,
+    reporter,
+    notes,
+    condition,
+    shopDistance,
+    publicTransport,
+    imgURI,
+) {
+    currentStorage.storageType = storageType;
+    currentStorage.dimension = dimension;
+    currentStorage.datetime = addingDatetime;
+    currentStorage.storageFeature = storageFeature;
+    currentStorage.price = price;
+    currentStorage.reporter = reporter;
+    currentStorage.notes = notes;
+    currentStorage.condition = condition;
+    currentStorage.shopDistance = shopDistance;
+    currentStorage.publicTransport = publicTransport;
+    currentStorage.imgURI = imgURI;
+
     $.mobile.changePage("#pgDetailStorage", {
         transition: "pop",
         reverse: false,

@@ -30,10 +30,10 @@ let cameraHandler = {
         );
     },
     ftw: imgURI => {
-        document.getElementById("msgAddImage").textContent = imgURI;
-        document.getElementById("photoAddImage").src = imgURI;
+        document.getElementById("pgAddImgURI").textContent = imgURI;
+        document.getElementById("pgAddImagePhoto").src = imgURI;
     },
     wtf: error => {
-        document.getElementById("msgAddImage").textContent = error;
+        alert(error);
     },
 };

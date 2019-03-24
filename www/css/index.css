@@ -4,25 +4,6 @@
     font-size: 15px;
 }
 
-#photoAddImage {
-    max-width: 100%;
-    max-height: auto;
-}
-
-.inputRequired {
-    color: red;
-}
-
-#tableStorage td {
-    text-align: center;
-    vertical-align: middle;
-}
-
-#tableStorage th {
-    text-align: center;
-    vertical-align: text-bottom;
-}
-
 #detailStorage {
     overflow: hidden;
 }
@@ -44,10 +25,33 @@ p {
     margin: 8px 0 16px 0;
 }
 
+.field {
+    font-weight: bold;
+}
+
+#formAddStorage p {
+    margin: 12px 0 0 0;
+}
+
+.inputRequired {
+    color: red;
+}
+
 #lstStorages a p {
     font-size: 16px;
 }
 
-.field {
-    font-weight: bold;
+#tableStorage td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#tableStorage th {
+    text-align: center;
+    vertical-align: text-bottom;
+}
+
+#pgAddImagePhoto {
+    max-width: 100%;
+    max-height: auto;
 }

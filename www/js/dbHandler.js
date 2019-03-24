@@ -11,7 +11,7 @@ const databaseHandler = {
             function(tx) {
                 //Run sql here using tx
                 tx.executeSql(
-                    "create table if not exists storage(_id integer primary key, storageType text, dimension real, addingDatetime numeric, storageFeature text, price real, reporter text, notes text, condition text, shopDistance numeric, publicTransport text)",
+                    "CREATE TABLE IF NOT  EXISTS storage(storageType text, dimension real, addingDatetime numeric, storageFeature text, price real, reporter text, notes text, condition text, shopDistance numeric, publicTransport text, imgURI text, PRIMARY KEY (storageType, dimension, addingDatetime, storageFeature, price, reporter))",
                     [],
                     function(tx, results) {},
                     function(tx, error) {

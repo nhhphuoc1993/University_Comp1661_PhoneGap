@@ -9,11 +9,12 @@ const storageHandler = {
         notes,
         condition,
         shopDistance,
-        publicTransport
+        publicTransport,
+        imgURI,
     ) {
         databaseHandler.db.transaction(function(tx) {
             tx.executeSql(
-                "insert into storage(storageType, dimension, addingDatetime, storageFeature, price, reporter, notes, condition, shopDistance, publicTransport) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO storage(storageType, dimension, addingDatetime, storageFeature, price, reporter, notes, condition, shopDistance, publicTransport, imgURI) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 [
                     storageType,
                     dimension,
@@ -24,12 +25,32 @@ const storageHandler = {
                     notes,
                     condition,
                     shopDistance,
-                    publicTransport
+                    publicTransport,
+                    imgURI,
                 ],
-                function(tx, results) {},
+                function(tx, results) {
+                    console.log("successfully add Storage!");
+                    resetPageAddStorageInput();
+                    changeToDetailPage(
+                        storageType,
+                        dimension,
+                        addingDatetime,
+                        storageFeature,
+                        price,
+                        reporter,
+                        notes,
+                        condition,
+                        shopDistance,
+                        publicTransport,
+                        imgURI,
+                    );
+                },
                 function(tx, error) {
                     console.log("add Storage error: " + error.message);
-                }
+                    if (error.code === 6) {
+                        alert(`This storage has already been added!`);
+                    }
+                },
             );
         });
     },
@@ -44,43 +65,79 @@ const storageHandler = {
                 },
                 function(tx, error) {
                     //TODO: Alert the message to user
-                    console.log(
-                        "Error while selecting the storages" + error.message
-                    );
-                }
+                    console.log("Error while selecting the storages" + error.message);
+                },
             );
         });
     },
-    deleteStorage: function(_id) {
+    deleteStorage: function(
+        storageType,
+        dimension,
+        addingDatetime,
+        storageFeature,
+        price,
+        reporter,
+    ) {
         databaseHandler.db.transaction(function(tx) {
             tx.executeSql(
-                "delete from storage where _id = ?",
-                [_id],
-                function(tx, results) {},
+                "DELETE FROM storage WHERE storageType = ? AND dimension = ? AND addingDatetime = ? AND storageFeature = ? AND price = ? AND reporter = ?",
+                [storageType, dimension, addingDatetime, storageFeature, price, reporter],
+                function(tx, results) {
+                    changeToHomePage();
+                },
                 function(tx, error) {
                     //TODO: Could make an alert for this one.
                     console.log("Error happen when deleting: " + error.message);
-                }
+                },
             );
         });
     },
     updateStorage: function(
-        _id,
         notes,
         condition,
         shopDistance,
-        publicTransport
+        publicTransport,
+        storageType,
+        dimension,
+        addingDatetime,
+        storageFeature,
+        price,
+        reporter,
     ) {
         databaseHandler.db.transaction(function(tx) {
             tx.executeSql(
-                "update storage set notes=?, condition=?, shopDistance=?, publicTransport=? where _id = ?",
-                [notes, condition, shopDistance, publicTransport, _id],
-                function(tx, result) {},
+                "UPDATE storage SET notes=?, condition=?, shopDistance=?, publicTransport=? WHERE storageType = ? AND dimension = ? AND addingDatetime = ? AND storageFeature = ? AND price = ? AND reporter = ?",
+                [
+                    notes,
+                    condition,
+                    shopDistance,
+                    publicTransport,
+                    storageType,
+                    dimension,
+                    addingDatetime,
+                    storageFeature,
+                    price,
+                    reporter,
+                ],
+                function(tx, result) {
+                    changeToDetailPage(
+                        storageType,
+                        dimension,
+                        addingDatetime,
+                        storageFeature,
+                        price,
+                        reporter,
+                        notes,
+                        condition,
+                        shopDistance,
+                        publicTransport,
+                    );
+                },
                 function(tx, error) {
                     //TODO: alert/display this message to user
                     console.log("Error updating Storage" + error.message);
-                }
+                },
             );
         });
-    }
+    },
 };
