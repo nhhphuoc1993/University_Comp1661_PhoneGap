@@ -13,6 +13,7 @@
         <script type="text/javascript" src="js/dbHandler.js"></script>
         <script type="text/javascript" src="js/storageHandler.js"></script>
         <script type="text/javascript" src="js/camHandler.js"></script>
+        <script type="text/javascript" src="js/validator.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </head>
     <body>
@@ -56,8 +57,8 @@
                                     <option value="home">Home</option>
                                     <option value="business">Business</option>
                                 </select>
-                                <p id="pgAddStorageTypeAlert" class="alert"></p>
                             </div>
+                            <p id="pgAddStorageTypeAlert" class="alert"></p>
                             <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddDimension"
@@ -74,8 +75,8 @@
                                     pattern="[0-9](.[0-9])?"
                                     placeholder="Enter dimension..."
                                 />
-                                <p id="pgAddDimensionAlert" class="alert"></p>
                             </div>
+                            <p id="pgAddDimensionAlert" class="alert"></p>
                             <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                             <div class="ui-field-contain">
                                 <label>DateTime<em class="inputRequired">*</em></label>
@@ -86,8 +87,8 @@
                                     placeholder="Enter date and time of adding the storage..."
                                     value=""
                                 />
-                                <p id="pgAddDatetimeAlert" class="alert"></p>
                             </div>
+                            <p id="pgAddDatetimeAlert" class="alert"></p>
                             <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageFeature"
@@ -100,8 +101,8 @@
                                     data-clear-btn="true"
                                     placeholder="Enter storage features..."
                                 />
-                                <p id="pgAddStorageFeatureAlert" class="alert"></p>
                             </div>
+                            <p id="pgAddStorageFeatureAlert" class="alert"></p>
                             <!-- Monthly rent price - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddPrice"
@@ -116,8 +117,8 @@
                                     pattern="[0-9](.[0-9])?"
                                     placeholder="Enter monthly rent price..."
                                 />
-                                <p id="pgAddPriceAlert" class="alert"></p>
                             </div>
+                            <p id="pgAddPriceAlert" class="alert"></p>
                             <!-- Name of the reporter – required fields -->
                             <div class="ui-field-contain">
                                 <label for="pgAddReporter"
@@ -132,7 +133,6 @@
                                 />
                             </div>
                             <p id="pgAddReporterAlert" class="alert"></p>
-
                             <div class="ui-field-contain">
                                 <label for="pgAddPublicTransport">Public transport</label>
                                 <select
@@ -210,25 +210,24 @@
                     </form>
                 </div>
                 <div id="pgListStorage" class="ui-body-d ui-content">
-                    <form class="ui-filterable">
-                        <input
-                            data-type="search"
-                            id="searchKeyword"
-                            placeholder="Search by storage type..."
-                        />
-                    </form>
-                    <ul
-                        data-role="listview"
-                        data-filter="true"
-                        data-input="#searchKeyword"
-                        data-inset="true"
-                        id="lstStorages"
-                    ></ul>
+                    <div class="ui-field-contain">
+                        <a
+                            href="#pgAdvanceSearchStorage"
+                            class="ui-btn ui-corner-all"
+                            id="btnToPgAdvanceSearchStorage"
+                            >Search</a
+                        >
+                        <a id="btnAddStorage" class="ui-btn ui-corner-all" onclick="testtest()">
+                            testtest
+                        </a>
+                    </div>
+
+                    <ul data-role="listview" id="lstStorages"></ul>
                 </div>
             </div>
         </div>
 
-        <div data-role="page" id="pgSearchAdvanceStorage">
+        <div data-role="page" id="pgAdvanceSearchStorage">
             <div data-role="header">
                 <a
                     href="#pgHome"
@@ -316,7 +315,7 @@
                             <a
                                 id="btnSearchStorage"
                                 style="background-color: royalblue; color: white"
-                                class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left"
+                                class="ui-btn ui-corner-all ui-icon-search ui-btn-icon-left"
                                 onclick="searchStorage()"
                             >
                                 Search

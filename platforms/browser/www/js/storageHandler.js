@@ -57,7 +57,23 @@ const storageHandler = {
     loadStorages: function(displayStorages) {
         databaseHandler.db.readTransaction(function(tx) {
             tx.executeSql(
-                "select * from storage",
+                "SELECT * FROM storage",
+                [],
+                function(tx, results) {
+                    //Do the display
+                    displayStorages(results);
+                },
+                function(tx, error) {
+                    //TODO: Alert the message to user
+                    console.log("Error while selecting the storages" + error.message);
+                },
+            );
+        });
+    },
+    loadSpecificStorages: function(displayStorages) {
+        databaseHandler.db.readTransaction(function(tx) {
+            tx.executeSql(
+                "SELECT * FROM storage WHERE dimension > 1",
                 [],
                 function(tx, results) {
                     //Do the display
