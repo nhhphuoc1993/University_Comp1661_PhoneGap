@@ -45,12 +45,15 @@
                     <form id="formAddStorage">
                         <div class="ui-grid-solo">
                             <p style="text-align: right;">
-                                <em class="inputRequired">*</em> indicates required
+                                <em class="inputRequired">*</em> indicates
+                                required
                             </p>
                             <!-- Storage type (e.g. home, business, etc.) – required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageType"
-                                    >Storage type<em class="inputRequired">*</em></label
+                                    >Storage type<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <select id="pgAddStorageType">
                                     <option value="">Choose option</option>
@@ -62,7 +65,8 @@
                             <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddDimension"
-                                    >Dimension (m<sup>2</sup>)<em class="inputRequired"
+                                    >Dimension (m<sup>2</sup>)<em
+                                        class="inputRequired"
                                         >*</em
                                     ></label
                                 >
@@ -79,7 +83,11 @@
                             <p id="pgAddDimensionAlert" class="alert"></p>
                             <!-- Date and time of adding the storage  (when the storage have been added) – required field -->
                             <div class="ui-field-contain">
-                                <label>DateTime<em class="inputRequired">*</em></label>
+                                <label
+                                    >DateTime<em class="inputRequired"
+                                        >*</em
+                                    ></label
+                                >
                                 <input
                                     type="datetime-local"
                                     data-clear-btn="true"
@@ -92,7 +100,9 @@
                             <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
                             <div class="ui-field-contain">
                                 <label for="pgAddStorageFeature"
-                                    >Features<em class="inputRequired">*</em></label
+                                    >Features<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <input
                                     type="text"
@@ -106,7 +116,9 @@
                             <!-- Monthly rent price - required field -->
                             <div class="ui-field-contain">
                                 <label for="pgAddPrice"
-                                    >Monthly price($)<em class="inputRequired">*</em></label
+                                    >Monthly price($)<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <input
                                     type="number"
@@ -122,7 +134,9 @@
                             <!-- Name of the reporter – required fields -->
                             <div class="ui-field-contain">
                                 <label for="pgAddReporter"
-                                    >Reporter<em class="inputRequired">*</em></label
+                                    >Reporter<em class="inputRequired"
+                                        >*</em
+                                    ></label
                                 >
                                 <input
                                     type="text"
@@ -134,7 +148,9 @@
                             </div>
                             <p id="pgAddReporterAlert" class="alert"></p>
                             <div class="ui-field-contain">
-                                <label for="pgAddPublicTransport">Public transport</label>
+                                <label for="pgAddPublicTransport"
+                                    >Public transport</label
+                                >
                                 <select
                                     id="pgAddPublicTransport"
                                     multiple="multiple"
@@ -148,7 +164,9 @@
                             </div>
 
                             <div class="ui-field-contain">
-                                <label for="pgAddShopDistance">Shop distance (m)</label>
+                                <label for="pgAddShopDistance"
+                                    >Shop distance (m)</label
+                                >
                                 <input
                                     type="number"
                                     id="pgAddShopDistance"
@@ -183,7 +201,10 @@
                             <!-- image -->
                             <div class="ui-field-contain">
                                 <label for="btnAddImage">Image</label>
-                                <button id="btnAddImage" class="ui-btn ui-btn-inline ui-corner-all">
+                                <button
+                                    id="btnAddImage"
+                                    class="ui-btn ui-btn-inline ui-corner-all"
+                                >
                                     Take Picture
                                 </button>
                                 <button
@@ -210,119 +231,139 @@
                     </form>
                 </div>
                 <div id="pgListStorage" class="ui-body-d ui-content">
-                    <div class="ui-field-contain">
-                        <a
-                            href="#pgAdvanceSearchStorage"
-                            class="ui-btn ui-corner-all"
-                            id="btnToPgAdvanceSearchStorage"
-                            >Search</a
-                        >
-                        <a id="btnAddStorage" class="ui-btn ui-corner-all" onclick="testtest()">
-                            testtest
-                        </a>
+                    <div style="margin-bottom: 30px">
+                        <form id="formSearchStorage">
+                            <!-- Storage type (e.g. home, business, etc.) – required field -->
+                            <div class="ui-field-contain">
+                                <label for="pgSearchStorageType"
+                                    >Storage type</label
+                                >
+                                <select id="pgSearchStorageType">
+                                    <option value="">Choose option</option>
+                                    <option value="home">Home</option>
+                                    <option value="business">Business</option>
+                                </select>
+                            </div>
+                            <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
+                            <div class="ui-field-contain">
+                                <div data-role="rangeslider">
+                                    <label
+                                        for="pgSearchDimensionFrom"
+                                        style="margin-top:2px"
+                                        >Dimension (m<sup>2</sup>)</label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="pgSearchDimensionFrom"
+                                        min="0"
+                                        max="500"
+                                        value="0"
+                                    />
+                                    <label
+                                        for="pgSearchDimensionTo"
+                                        tyle="margin-top:2px"
+                                        >Dimension (m<sup>2</sup>)</label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="pgSearchDimensionTo"
+                                        min="0"
+                                        max="500"
+                                        value="500"
+                                    />
+                                </div>
+                            </div>
+                            <!-- Date and time of searching the storage  (when the storage have been searched) – required field -->
+                            <div class="ui-field-contain">
+                                <label>Date Range</label>
+                                <input
+                                    type="date"
+                                    data-clear-btn="true"
+                                    id="pgSearchDateFrom"
+                                    value=""
+                                />
+                                <label> - </label>
+                                <input
+                                    type="date"
+                                    data-clear-btn="true"
+                                    id="pgSearchDateTo"
+                                    value=""
+                                />
+                            </div>
+                            <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
+                            <div class="ui-field-contain">
+                                <label for="pgSearchStorageFeature"
+                                    >Features</label
+                                >
+                                <input
+                                    type="text"
+                                    id="pgSearchStorageFeature"
+                                    value=""
+                                    data-clear-btn="true"
+                                    placeholder="Enter storage features..."
+                                />
+                            </div>
+                            <!-- Monthly rent price - required field -->
+                            <div class="ui-field-contain">
+                                <div data-role="rangeslider">
+                                    <label
+                                        for="pgSearchPriceFrom"
+                                        style="margin-top:6px"
+                                        >Monthly price($)</label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="pgSearchPriceFrom"
+                                        min="0"
+                                        max="500"
+                                        value="0"
+                                    />
+                                    <label
+                                        for="pgSearchPriceTo"
+                                        style="margin-top:6px"
+                                        >Monthly price($)</label
+                                    >
+                                    <input
+                                        type="range"
+                                        id="pgSearchPriceTo"
+                                        min="0"
+                                        max="500"
+                                        value="500"
+                                    />
+                                </div>
+                            </div>
+                            <!-- Name of the reporter – required fields -->
+                            <div class="ui-field-contain">
+                                <label for="pgSearchReporter">Reporter</label>
+                                <input
+                                    type="text"
+                                    id="pgSearchReporter"
+                                    value=""
+                                    data-clear-btn="true"
+                                    placeholder="Enter reporter's name..."
+                                />
+                            </div>
+                            <div class="ui-field-contain">
+                                <label
+                                    for="btnSearchStorage"
+                                    class="ui-hidden-accessible"
+                                    >Reporter</label
+                                >
+                                <a
+                                    id="btnSearchStorage"
+                                    class="ui-btn ui-corner-all"
+                                    onclick="testtest()"
+                                >
+                                    Search
+                                </a>
+                            </div>
+                        </form>
                     </div>
 
-                    <ul data-role="listview" id="lstStorages"></ul>
+                    <div>
+                        <ul data-role="listview" id="lstStorages"></ul>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div data-role="page" id="pgAdvanceSearchStorage">
-            <div data-role="header">
-                <a
-                    href="#pgHome"
-                    class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back"
-                    id="btnBackPgListStorage"
-                    >Back</a
-                >
-                <h2 class="title">Search Storage</h2>
-            </div>
-            <div role="main" class="ui-content">
-                <form id="formSearchStorage">
-                    <div class="ui-grid-solo">
-                        <!-- Storage type (e.g. home, business, etc.) – required field -->
-                        <div class="ui-field-contain">
-                            <label for="pgSearchStorageType">Storage type</label>
-                            <select id="pgSearchStorageType">
-                                <option value="">Choose option</option>
-                                <option value="home">Home</option>
-                                <option value="business">Business</option>
-                            </select>
-                        </div>
-                        <!-- Dimensions in square meters (e.g. 2m2, 4m2, etc.) - required field -->
-                        <div class="ui-field-contain">
-                            <label for="pgSearchDimension"
-                                >Dimension (m<sup>2</sup>)<em class="inputRequired">*</em></label
-                            >
-                            <input
-                                type="number"
-                                id="pgSearchDimension"
-                                value=""
-                                min="0"
-                                data-clear-btn="true"
-                                pattern="[0-9](.[0-9])?"
-                                placeholder="Enter dimension..."
-                            />
-                        </div>
-                        <!-- Date and time of searching the storage  (when the storage have been searched) – required field -->
-                        <div class="ui-field-contain">
-                            <label>DateTime</label>
-                            <input
-                                type="datetime-local"
-                                data-clear-btn="true"
-                                id="pgSearchDatetime"
-                                placeholder="Enter date and time of searching the storage..."
-                                value=""
-                            />
-                        </div>
-                        <!-- Storage features (e.g. private space, sharing space, CCTV, etc.) -->
-                        <div class="ui-field-contain">
-                            <label for="pgSearchStorageFeature">Features</label>
-                            <input
-                                type="text"
-                                id="pgSearchStorageFeature"
-                                value=""
-                                data-clear-btn="true"
-                                placeholder="Enter storage features..."
-                            />
-                        </div>
-                        <!-- Monthly rent price - required field -->
-                        <div class="ui-field-contain">
-                            <label for="pgSearchPrice">Monthly price($)</label>
-                            <input
-                                type="number"
-                                id="pgSearchPrice"
-                                value=""
-                                min="0"
-                                data-clear-btn="true"
-                                pattern="[0-9](.[0-9])?"
-                                placeholder="Enter monthly rent price..."
-                            />
-                        </div>
-                        <!-- Name of the reporter – required fields -->
-                        <div class="ui-field-contain">
-                            <label for="pgSearchReporter">Reporter</label>
-                            <input
-                                type="text"
-                                id="pgSearchReporter"
-                                value=""
-                                data-clear-btn="true"
-                                placeholder="Enter reporter's name..."
-                            />
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="btnSearchStorage"></label>
-                            <a
-                                id="btnSearchStorage"
-                                style="background-color: royalblue; color: white"
-                                class="ui-btn ui-corner-all ui-icon-search ui-btn-icon-left"
-                                onclick="searchStorage()"
-                            >
-                                Search
-                            </a>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
 
@@ -411,7 +452,9 @@
                 <form id="formUpdateStorage">
                     <div class="ui-grid-solo">
                         <div class="ui-field-contain">
-                            <label for="pgUpdatePublicTransport">Public transport</label>
+                            <label for="pgUpdatePublicTransport"
+                                >Public transport</label
+                            >
                             <select
                                 id="pgUpdatePublicTransport"
                                 multiple="multiple"
@@ -425,7 +468,9 @@
                         </div>
 
                         <div class="ui-field-contain">
-                            <label for="pgUpdateShopDistance">Shop distance (m)</label>
+                            <label for="pgUpdateShopDistance"
+                                >Shop distance (m)</label
+                            >
                             <input
                                 type="number"
                                 id="pgUpdateShopDistance"

@@ -1,3 +1,29 @@
+let currentStorage = {
+    storageType: "",
+    dimension: -1,
+    addingDatetime: "",
+    storageFeature: "",
+    price: -1,
+    reporter: "",
+    notes: "",
+    condition: "",
+    shopDistance: -1,
+    publicTransport: "",
+    imgURI: ""
+};
+
+let searchStorage = {
+    storageType: "",
+    dimensionFrom: -1,
+    dimensionTo: -1,
+    dateFrom: "",
+    dateTo: "",
+    storageFeature: "",
+    priceFrom: -1,
+    priceTo: -1,
+    reporter: ""
+};
+
 $(document).on("pagebeforeshow", "#pgHome", function() {
     databaseHandler.createDatabase();
     storageHandler.loadStorages(displayStorages);
@@ -9,11 +35,65 @@ $(document).on("pagebeforeshow", "#pgHome", function() {
         // cameraHandler.takephoto();
         cameraHandler.ftw("img/c.jpg");
     });
+
     $("#btnAddImageFromGallery").on("vclick", function() {
         event.preventDefault();
         // cameraHandler.selectPhoto();
         cameraHandler.ftw("img/c.jpg");
     });
+});
+
+$(document).on("pagebeforeshow", "#pgDetailStorage", function() {
+    let detailStorage = $("#detailStorage");
+    detailStorage.empty(); //Clean the old data before
+    let imgURI = currentStorage.imgURI
+        ? `<img id="detailStorageImage" alt="${currentStorage.imgURI}" src="${
+              currentStorage.imgURI
+          }" />`
+        : "";
+    elementDetailStorage = `
+        <h4>Storage type:</h4>
+        <p>${currentStorage.storageType}</p>
+        <h4>Dimension:</h4>
+        <p>${currentStorage.dimension}</p>
+        <h4>Date and time:</h4>
+        <p>${currentStorage.datetime}</p>
+        <h4>Feature:</h4>
+        <p>${currentStorage.storageFeature}</p>
+        <h4>Price:</h4>
+        <p>${currentStorage.price}</p>
+        <h4>Reporter:</h4>
+        <p>${currentStorage.reporter}</p>
+        <h4>Condition:</h4>
+        <p>${currentStorage.condition}</p>
+        <h4>Distance to shops:</h4>
+        <p>${currentStorage.shopDistance}</p>
+        <h4>Public transportation:</h4>
+        <p>${currentStorage.publicTransport}</p>
+        <h4>Notes:</h4>
+        <p id="detailStorageNotes">${currentStorage.notes}</p>
+        <h4>Image:</h4>
+        <p>${imgURI}</p>
+    `;
+    detailStorage.append(elementDetailStorage);
+});
+
+$(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
+    let currentPublicTransport = currentStorage.publicTransport.trim();
+    $("select#pgUpdatePublicTransport option").attr("selected", false);
+    if (currentPublicTransport !== "") {
+        $.each(currentPublicTransport.split(","), function(i, v) {
+            $("#pgUpdatePublicTransport option[value='" + v.trim() + "']").prop(
+                "selected",
+                true
+            );
+        });
+    }
+    $("#pgUpdatePublicTransport").selectmenu("refresh");
+
+    $("#pgUpdateShopDistance").val(currentStorage.shopDistance);
+    $("#pgUpdateCondition").val(currentStorage.condition);
+    $("#pgUpdateNotes").val(currentStorage.notes);
 });
 
 function testtest() {
@@ -30,7 +110,9 @@ function addStorage() {
     let notes = $("#pgAddNotes").val();
     let condition = $("#pgAddCondition").val();
     let shopDistance = $("#pgAddShopDistance").val();
-    let publicTransport = $("#pgAddPublicTransport").val() ? $("#pgAddPublicTransport").val() : "";
+    let publicTransport = $("#pgAddPublicTransport").val()
+        ? $("#pgAddPublicTransport").val()
+        : "";
     let imgURI = $("#pgAddImgURI").text();
     let isAddStorage = validator.validateAddStorageForm(
         storageType,
@@ -38,7 +120,7 @@ function addStorage() {
         addingDatetime,
         storageFeature,
         price,
-        reporter,
+        reporter
     );
 
     if (isAddStorage === true) {
@@ -53,7 +135,7 @@ function addStorage() {
             condition,
             shopDistance,
             publicTransport,
-            imgURI,
+            imgURI
         );
     } else {
         event.preventDefault();
@@ -79,20 +161,6 @@ function resetPageAddStorageInput() {
     $("#pgAddPublicTransport").selectmenu("refresh");
 }
 
-let currentStorage = {
-    storageType: "",
-    dimension: -1,
-    addingDatetime: "",
-    storageFeature: "",
-    price: -1,
-    reporter: "",
-    notes: "",
-    condition: "",
-    shopDistance: -1,
-    publicTransport: "",
-    imgURI: "",
-};
-
 function displayStorages(results) {
     let length = results.rows.length;
     let lstStorages = $("#lstStorages");
@@ -110,7 +178,9 @@ function displayStorages(results) {
                     </p>
                     <p>
                         <span class="field">Dimension:</span>
-                        <span name="dimension">${item.dimension}</span>
+                        <span name="dimension">${
+                            item.dimension
+                        } m<sup>2</sup></span>
                     </p>
                     <p>
                         <span class="field">Datetime:</span>
@@ -123,18 +193,24 @@ function displayStorages(results) {
                     </p>
                     <p>
                         <span class="field">Price:</span>
-                        <span name="price">${item.price}</span>
+                        <span name="price">${item.price} $</span>
                     </p>
                     <p>
                         <span class="field">Reporter:</span>
                         <span name="reporter">${item.reporter}</span>
                     </p>
-                    <p name="condition" class="ui-hidden-accessible">${item.condition}</p>
-                    <p name="distance" class="ui-hidden-accessible">${item.shopDistance}</p>
+                    <p name="condition" class="ui-hidden-accessible">${
+                        item.condition
+                    }</p>
+                    <p name="distance" class="ui-hidden-accessible">${
+                        item.shopDistance
+                    }</p>
                     <p name="publicTransport" class="ui-hidden-accessible">
                         ${item.publicTransport}
                     </p>
-                    <p name="notes" class="ui-hidden-accessible">${item.notes}</p>
+                    <p name="notes" class="ui-hidden-accessible">${
+                        item.notes
+                    }</p>
                     <p name="image" class="ui-hidden-accessible">${imgURI}</p>
                 </a>
             </li>
@@ -185,41 +261,6 @@ function displayStorages(results) {
     });
 }
 
-$(document).on("pagebeforeshow", "#pgDetailStorage", function() {
-    let detailStorage = $("#detailStorage");
-    detailStorage.empty(); //Clean the old data before
-    let imgURI = currentStorage.imgURI
-        ? `<img id="detailStorageImage" alt="${currentStorage.imgURI}" src="${
-              currentStorage.imgURI
-          }" />`
-        : "";
-    elementDetailStorage = `
-        <h4>Storage type:</h4>
-        <p>${currentStorage.storageType}</p>
-        <h4>Dimension:</h4>
-        <p>${currentStorage.dimension}</p>
-        <h4>Date and time:</h4>
-        <p>${currentStorage.datetime}</p>
-        <h4>Feature:</h4>
-        <p>${currentStorage.storageFeature}</p>
-        <h4>Price:</h4>
-        <p>${currentStorage.price}</p>
-        <h4>Reporter:</h4>
-        <p>${currentStorage.reporter}</p>
-        <h4>Condition:</h4>
-        <p>${currentStorage.condition}</p>
-        <h4>Distance to shops:</h4>
-        <p>${currentStorage.shopDistance}</p>
-        <h4>Public transportation:</h4>
-        <p>${currentStorage.publicTransport}</p>
-        <h4>Notes:</h4>
-        <p id="detailStorageNotes">${currentStorage.notes}</p>
-        <h4>Image:</h4>
-        <p>${imgURI}</p>
-    `;
-    detailStorage.append(elementDetailStorage);
-});
-
 function deleteStorage() {
     storageHandler.deleteStorage(
         currentStorage.storageType,
@@ -227,7 +268,7 @@ function deleteStorage() {
         currentStorage.datetime,
         currentStorage.storageFeature,
         currentStorage.price,
-        currentStorage.reporter,
+        currentStorage.reporter
     );
 }
 
@@ -235,24 +276,9 @@ function changeToHomePage() {
     $.mobile.changePage("#pgHome", {
         transition: "pop",
         reverse: false,
-        changeHash: false,
+        changeHash: false
     });
 }
-
-$(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
-    let currentPublicTransport = currentStorage.publicTransport.trim();
-    $("select#pgUpdatePublicTransport option").attr("selected", false);
-    if (currentPublicTransport !== "") {
-        $.each(currentPublicTransport.split(","), function(i, v) {
-            $("#pgUpdatePublicTransport option[value='" + v.trim() + "']").prop("selected", true);
-        });
-    }
-    $("#pgUpdatePublicTransport").selectmenu("refresh");
-
-    $("#pgUpdateShopDistance").val(currentStorage.shopDistance);
-    $("#pgUpdateCondition").val(currentStorage.condition);
-    $("#pgUpdateNotes").val(currentStorage.notes);
-});
 
 function updateStorage() {
     let newNotes = $("#pgUpdateNotes").val();
@@ -272,7 +298,7 @@ function updateStorage() {
         currentStorage.datetime,
         currentStorage.storageFeature,
         currentStorage.price,
-        currentStorage.reporter,
+        currentStorage.reporter
     );
 }
 
@@ -292,7 +318,7 @@ function changeToDetailPage(
     condition,
     shopDistance,
     publicTransport,
-    imgURI,
+    imgURI
 ) {
     currentStorage.storageType = storageType;
     currentStorage.dimension = dimension;
@@ -309,6 +335,6 @@ function changeToDetailPage(
     $.mobile.changePage("#pgDetailStorage", {
         transition: "pop",
         reverse: false,
-        changeHash: false,
+        changeHash: false
     });
 }
