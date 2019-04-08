@@ -1,23 +1,144 @@
+let currentStorage = {
+    storageType: "",
+    dimension: -1,
+    addingDatetime: "",
+    storageFeature: "",
+    price: -1,
+    reporter: "",
+    notes: "",
+    condition: "",
+    shopDistance: -1,
+    publicTransport: "",
+    imgURI: "",
+};
+
+let searchingStorage = {
+    storageType: "",
+    dimensionFrom: -1,
+    dimensionTo: -1,
+    dateFrom: "",
+    dateTo: "",
+    storageFeature: "",
+    priceFrom: -1,
+    priceTo: -1,
+    reporter: "",
+};
+
 $(document).on("pagebeforeshow", "#pgHome", function() {
-    databaseHandler.createDatabase();
+    databaseHandler.createLoadDatabase();
+    databaseHandler.createTables();
+
     storageHandler.loadStorages(displayStorages);
+    storageHandler.getMaxPrice();
+    storageHandler.getMaxDimension();
+    storageTypeHandler.loadStorageTypes(displayStorageTypes);
 
     activeViewStorageTab();
 
     $("#btnAddImage").on("vclick", function() {
         event.preventDefault();
-        // cameraHandler.takephoto();
-        cameraHandler.ftw("img/c.jpg");
+        cameraHandler.takephoto();
+        // cameraHandler.ftw("img/d.jpg");
     });
+
     $("#btnAddImageFromGallery").on("vclick", function() {
         event.preventDefault();
-        // cameraHandler.selectPhoto();
-        cameraHandler.ftw("img/c.jpg");
+        cameraHandler.selectPhoto();
+        // cameraHandler.ftw("img/c.jpg");
     });
 });
 
-function testtest() {
-    storageHandler.loadSpecificStorages(displayStorages);
+$(document).on("pagebeforeshow", "#pgDetailStorage", function() {
+    let detailStorage = $("#detailStorage");
+    detailStorage.empty(); //Clean the old data before
+
+    let width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+
+    let imgURI = currentStorage.imgURI
+        ? `<img id="detailStorageImage" alt="${currentStorage.imgURI}" src="${
+              currentStorage.imgURI
+          }" style="width: ${width / 2}px; height: auto;" />`
+        : "";
+
+    elementDetailStorage = `
+        <h4>Storage type:</h4>
+        <p>${currentStorage.storageType}</p>
+        <h4>Dimension:</h4>
+        <p>${currentStorage.dimension}</p>
+        <h4>Date and time:</h4>
+        <p>${currentStorage.datetime}</p>
+        <h4>Feature:</h4>
+        <p>${currentStorage.storageFeature}</p>
+        <h4>Price:</h4>
+        <p>${currentStorage.price}</p>
+        <h4>Reporter:</h4>
+        <p>${currentStorage.reporter}</p>
+        <h4>Condition:</h4>
+        <p>${currentStorage.condition}</p>
+        <h4>Distance to shops:</h4>
+        <p>${currentStorage.shopDistance}</p>
+        <h4>Public transportation:</h4>
+        <p>${currentStorage.publicTransport}</p>
+        <h4>Notes:</h4>
+        <p id="detailStorageNotes">${currentStorage.notes}</p>
+        <h4>Image:</h4>
+        <div style="text-align: center;">${imgURI}</div>
+    `;
+    detailStorage.append(elementDetailStorage);
+});
+
+$(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
+    let currentPublicTransport = currentStorage.publicTransport.trim();
+    $("select#pgUpdatePublicTransport option").attr("selected", false);
+    if (currentPublicTransport !== "") {
+        $.each(currentPublicTransport.split(","), function(i, v) {
+            $("#pgUpdatePublicTransport option[value='" + v.trim() + "']").prop("selected", true);
+        });
+    }
+    $("#pgUpdatePublicTransport").selectmenu("refresh");
+
+    $("#pgUpdateShopDistance").val(currentStorage.shopDistance);
+    $("#pgUpdateCondition").val(currentStorage.condition);
+    $("#pgUpdateNotes").val(currentStorage.notes);
+});
+
+function searchStorage() {
+    let searchStorageType = $("#pgSearchStorageType").val();
+    let searchDimensionFrom = $("#pgSearchDimensionFrom").val();
+    let searchDimensionTo = $("#pgSearchDimensionTo").val();
+    let searchDateFrom = $("#pgSearchDateFrom").val();
+    let searchDateTo = $("#pgSearchDateTo").val();
+    let searchStorageFeature = $("#pgSearchStorageFeature")
+        .val()
+        .trim();
+    let searchPriceFrom = $("#pgSearchPriceFrom").val();
+    let searchPriceTo = $("#pgSearchPriceTo").val();
+    let searchReporter = $("#pgSearchReporter")
+        .val()
+        .trim();
+
+    searchingStorage.storageType = searchStorageType;
+    searchingStorage.dimensionFrom = searchDimensionFrom;
+    searchingStorage.dimensionTo = searchDimensionTo;
+    searchingStorage.dateFrom = searchDateFrom;
+    searchingStorage.dateTo = searchDateTo;
+    searchingStorage.storageFeature = searchStorageFeature;
+    searchingStorage.priceFrom = searchPriceFrom;
+    searchingStorage.priceTo = searchPriceTo;
+    searchingStorage.reporter = searchReporter;
+
+    storageHandler.loadSpecificStorages(
+        displayStorages,
+        searchStorageType,
+        searchDimensionFrom,
+        searchDimensionTo,
+        searchDateFrom,
+        searchDateTo,
+        searchStorageFeature,
+        searchPriceFrom,
+        searchPriceTo,
+        searchReporter,
+    );
 }
 
 function addStorage() {
@@ -42,10 +163,12 @@ function addStorage() {
     );
 
     if (isAddStorage === true) {
+        addingDatetime = addingDatetime + getTimeZoneOffset();
+
         storageHandler.addStorage(
             storageType,
             dimension,
-            new Date(addingDatetime).toUTCString(),
+            addingDatetime,
             storageFeature,
             price,
             reporter,
@@ -79,27 +202,12 @@ function resetPageAddStorageInput() {
     $("#pgAddPublicTransport").selectmenu("refresh");
 }
 
-let currentStorage = {
-    storageType: "",
-    dimension: -1,
-    addingDatetime: "",
-    storageFeature: "",
-    price: -1,
-    reporter: "",
-    notes: "",
-    condition: "",
-    shopDistance: -1,
-    publicTransport: "",
-    imgURI: "",
-};
-
 function displayStorages(results) {
     let length = results.rows.length;
     let lstStorages = $("#lstStorages");
     lstStorages.empty(); //Clean the old data before adding.
     for (let i = 0; i < length; i++) {
         let item = results.rows.item(i);
-        let datetimeObj = new Date(item.addingDatetime);
         let imgURI = item.imgURI ? item.imgURI : "";
         elementStorage = `
             <li>
@@ -110,12 +218,11 @@ function displayStorages(results) {
                     </p>
                     <p>
                         <span class="field">Dimension:</span>
-                        <span name="dimension">${item.dimension}</span>
+                        <span name="dimension">${item.dimension} m<sup>2</sup></span>
                     </p>
                     <p>
                         <span class="field">Datetime:</span>
-                        <span name="datetime">${datetimeObj.getDate()}/${datetimeObj.getMonth() +
-            1}/${datetimeObj.getFullYear()}, ${datetimeObj.getHours()}:${datetimeObj.getMinutes()}</span>
+                        <span name="datetime">${item.addingDatetime}</span>
                     </p>
                     <p>
                         <span class="field">Feature:</span>
@@ -123,7 +230,7 @@ function displayStorages(results) {
                     </p>
                     <p>
                         <span class="field">Price:</span>
-                        <span name="price">${item.price}</span>
+                        <span name="price">${item.price} $</span>
                     </p>
                     <p>
                         <span class="field">Reporter:</span>
@@ -185,46 +292,30 @@ function displayStorages(results) {
     });
 }
 
-$(document).on("pagebeforeshow", "#pgDetailStorage", function() {
-    let detailStorage = $("#detailStorage");
-    detailStorage.empty(); //Clean the old data before
-    let imgURI = currentStorage.imgURI
-        ? `<img id="detailStorageImage" alt="${currentStorage.imgURI}" src="${
-              currentStorage.imgURI
-          }" />`
-        : "";
-    elementDetailStorage = `
-        <h4>Storage type:</h4>
-        <p>${currentStorage.storageType}</p>
-        <h4>Dimension:</h4>
-        <p>${currentStorage.dimension}</p>
-        <h4>Date and time:</h4>
-        <p>${currentStorage.datetime}</p>
-        <h4>Feature:</h4>
-        <p>${currentStorage.storageFeature}</p>
-        <h4>Price:</h4>
-        <p>${currentStorage.price}</p>
-        <h4>Reporter:</h4>
-        <p>${currentStorage.reporter}</p>
-        <h4>Condition:</h4>
-        <p>${currentStorage.condition}</p>
-        <h4>Distance to shops:</h4>
-        <p>${currentStorage.shopDistance}</p>
-        <h4>Public transportation:</h4>
-        <p>${currentStorage.publicTransport}</p>
-        <h4>Notes:</h4>
-        <p id="detailStorageNotes">${currentStorage.notes}</p>
-        <h4>Image:</h4>
-        <p>${imgURI}</p>
-    `;
-    detailStorage.append(elementDetailStorage);
-});
+function displayStorageTypes(results, elementId) {
+    let length = results.rows.length;
+    let lstStorageTypes = $(`#${elementId}`);
+    lstStorageTypes.empty(); //Clean the old data before adding.
+
+    elementStorageType = `<option value="">Choose option</option>`;
+    lstStorageTypes.append(elementStorageType);
+
+    for (let i = 0; i < length; i++) {
+        let item = results.rows.item(i);
+        elementStorageType = `
+            <option value="${item.type}">${item.type}</option>
+        `;
+
+        lstStorageTypes.append(elementStorageType);
+    }
+
+    lstStorageTypes.selectmenu("refresh", true);
+}
 
 function deleteStorage() {
     storageHandler.deleteStorage(
         currentStorage.storageType,
         currentStorage.dimension,
-        currentStorage.datetime,
         currentStorage.storageFeature,
         currentStorage.price,
         currentStorage.reporter,
@@ -238,21 +329,6 @@ function changeToHomePage() {
         changeHash: false,
     });
 }
-
-$(document).on("pagebeforeshow", "#pgUpdateStorage", function() {
-    let currentPublicTransport = currentStorage.publicTransport.trim();
-    $("select#pgUpdatePublicTransport option").attr("selected", false);
-    if (currentPublicTransport !== "") {
-        $.each(currentPublicTransport.split(","), function(i, v) {
-            $("#pgUpdatePublicTransport option[value='" + v.trim() + "']").prop("selected", true);
-        });
-    }
-    $("#pgUpdatePublicTransport").selectmenu("refresh");
-
-    $("#pgUpdateShopDistance").val(currentStorage.shopDistance);
-    $("#pgUpdateCondition").val(currentStorage.condition);
-    $("#pgUpdateNotes").val(currentStorage.notes);
-});
 
 function updateStorage() {
     let newNotes = $("#pgUpdateNotes").val();
@@ -273,6 +349,7 @@ function updateStorage() {
         currentStorage.storageFeature,
         currentStorage.price,
         currentStorage.reporter,
+        currentStorage.imgURI,
     );
 }
 
@@ -311,4 +388,22 @@ function changeToDetailPage(
         reverse: false,
         changeHash: false,
     });
+}
+
+function getTimeZoneOffset() {
+    var timezone_offset_min = new Date().getTimezoneOffset(),
+        offset_hrs = parseInt(Math.abs(timezone_offset_min / 60)),
+        offset_min = Math.abs(timezone_offset_min % 60),
+        timezone_standard;
+
+    if (offset_hrs < 10) offset_hrs = "0" + offset_hrs;
+
+    if (offset_min < 10) offset_min = "0" + offset_min;
+
+    // Add an opposite sign to the offset
+    // If offset is 0, it means timezone is UTC
+    if (timezone_offset_min < 0) timezone_standard = "+" + offset_hrs + ":" + offset_min;
+    else if (timezone_offset_min > 0) timezone_standard = "-" + offset_hrs + ":" + offset_min;
+    else if (timezone_offset_min == 0) timezone_standard = "Z";
+    return timezone_standard;
 }

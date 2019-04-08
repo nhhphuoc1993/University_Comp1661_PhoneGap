@@ -9,6 +9,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
     <allow-navigation href="*" />
     <allow-intent href="*" />
 </widget>

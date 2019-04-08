@@ -10,7 +10,6 @@ let validator = {
         let result = true;
 
         const emptyAlert = "This field cannot be empty!";
-        const invalidDateAlert = "Invalid datetime!";
         let pgAddStorageTypeAlert = "";
         let pgAddDimensionAlert = "";
         let pgAddDatetimeAlert = "";
@@ -31,14 +30,6 @@ let validator = {
         if (!addingDatetime) {
             pgAddDatetimeAlert = emptyAlert;
             result = false;
-        } else {
-            if (
-                addingDatetime.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/g) === null ||
-                new Date(addingDatetime) > new Date()
-            ) {
-                pgAddDatetimeAlert = invalidDateAlert;
-                result = false;
-            }
         }
 
         if (!storageFeature) {
