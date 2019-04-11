@@ -27,6 +27,7 @@ let searchingStorage = {
 $(document).on("pagebeforeshow", "#pgHome", function() {
     databaseHandler.createLoadDatabase();
     databaseHandler.createTables();
+    databaseHandler.initialInsert();
 
     storageHandler.loadStorages(displayStorages);
     storageHandler.getMaxPrice();
@@ -61,27 +62,27 @@ $(document).on("pagebeforeshow", "#pgDetailStorage", function() {
         : "";
 
     elementDetailStorage = `
-        <h4>Storage type:</h4>
+        <h4>Storage type</h4>
         <p>${currentStorage.storageType}</p>
-        <h4>Dimension:</h4>
+        <h4>Dimension (m<sup>2</sup>)</h4>
         <p>${currentStorage.dimension}</p>
-        <h4>Date and time:</h4>
+        <h4>Date and time</h4>
         <p>${currentStorage.datetime}</p>
-        <h4>Feature:</h4>
+        <h4>Feature</h4>
         <p>${currentStorage.storageFeature}</p>
-        <h4>Price:</h4>
+        <h4>Price</h4>
         <p>${currentStorage.price}</p>
-        <h4>Reporter:</h4>
+        <h4>Reporter</h4>
         <p>${currentStorage.reporter}</p>
-        <h4>Condition:</h4>
+        <h4>Condition</h4>
         <p>${currentStorage.condition}</p>
-        <h4>Distance to shops:</h4>
+        <h4>Distance to shops (m)</h4>
         <p>${currentStorage.shopDistance}</p>
-        <h4>Public transportation:</h4>
+        <h4>Public transportation</h4>
         <p>${currentStorage.publicTransport}</p>
-        <h4>Notes:</h4>
+        <h4>Notes</h4>
         <p id="detailStorageNotes">${currentStorage.notes}</p>
-        <h4>Image:</h4>
+        <h4>Image</h4>
         <div style="text-align: center;">${imgURI}</div>
     `;
     detailStorage.append(elementDetailStorage);
@@ -164,6 +165,7 @@ function addStorage() {
 
     if (isAddStorage === true) {
         addingDatetime = addingDatetime + getTimeZoneOffset();
+        publicTransport = publicTransport ? publicTransport.filter(i => i !== "").join(",") : "";
 
         storageHandler.addStorage(
             storageType,
@@ -217,8 +219,8 @@ function displayStorages(results) {
                         <span name="type">${item.storageType}</span>
                     </p>
                     <p>
-                        <span class="field">Dimension:</span>
-                        <span name="dimension">${item.dimension} m<sup>2</sup></span>
+                        <span class="field">Dimension (m<sup>2</sup>): </span>
+                        <span name="dimension">${item.dimension}</span>
                     </p>
                     <p>
                         <span class="field">Datetime:</span>
@@ -229,8 +231,8 @@ function displayStorages(results) {
                         <span name="feature">${item.storageFeature}</span>
                     </p>
                     <p>
-                        <span class="field">Price:</span>
-                        <span name="price">${item.price} $</span>
+                        <span class="field">Price ($):</span>
+                        <span name="price">${item.price}</span>
                     </p>
                     <p>
                         <span class="field">Reporter:</span>
@@ -279,9 +281,6 @@ function displayStorages(results) {
             .text();
         currentStorage.shopDistance = $(this)
             .find("[name='distance']")
-            .text();
-        currentStorage.publicTransport = $(this)
-            .find("[name='publicTransport']")
             .text();
         currentStorage.publicTransport = $(this)
             .find("[name='publicTransport']")

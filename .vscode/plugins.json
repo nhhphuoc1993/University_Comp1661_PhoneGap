@@ -1,1 +1,1 @@
-{"plugins":["cordova-plugin-firebase","cordova-plugin-whitelist"]}
+{"plugins":["cordova-plugin-firebase","cordova-plugin-whitelist","cordova-plugin-x-socialsharing","es6-promise-plugin","cordova-plugin-inappbrowser"]}

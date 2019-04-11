@@ -161,6 +161,7 @@ const storageHandler = {
     },
     deleteStorage: function(storageType, dimension, storageFeature, price, reporter) {
         databaseHandler.db.transaction(function(tx) {
+            console.log(storageType);
             tx.executeSql(
                 "DELETE FROM storage WHERE storageType = ? AND dimension = ? AND storageFeature = ? AND price = ? AND reporter = ?",
                 [storageType, dimension, storageFeature, price, reporter],

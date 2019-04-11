@@ -34,8 +34,6 @@ const databaseHandler = {
             },
             function() {
                 console.log("Create or load DB transaction completed successfully");
-
-                databaseHandler.initialInsert();
             },
         );
     },
