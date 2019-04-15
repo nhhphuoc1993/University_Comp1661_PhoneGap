@@ -1,3 +1,9 @@
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+    // Now safe to use device APIs
+}
+
 let currentStorage = {
     storageType: "",
     dimension: -1,
@@ -26,13 +32,11 @@ let searchingStorage = {
 
 $(document).on("pagebeforeshow", "#pgHome", function() {
     databaseHandler.createLoadDatabase();
-    databaseHandler.createTables();
-    databaseHandler.initialInsert();
 
     storageHandler.loadStorages(displayStorages);
     storageHandler.getMaxPrice();
     storageHandler.getMaxDimension();
-    storageTypeHandler.loadStorageTypes(displayStorageTypes);
+    storageTypeHandler.loadStorageTypes();
 
     activeViewStorageTab();
 
@@ -289,26 +293,6 @@ function displayStorages(results) {
             .find("[name='image']")
             .text();
     });
-}
-
-function displayStorageTypes(results, elementId) {
-    let length = results.rows.length;
-    let lstStorageTypes = $(`#${elementId}`);
-    lstStorageTypes.empty(); //Clean the old data before adding.
-
-    elementStorageType = `<option value="">Choose option</option>`;
-    lstStorageTypes.append(elementStorageType);
-
-    for (let i = 0; i < length; i++) {
-        let item = results.rows.item(i);
-        elementStorageType = `
-            <option value="${item.type}">${item.type}</option>
-        `;
-
-        lstStorageTypes.append(elementStorageType);
-    }
-
-    lstStorageTypes.selectmenu("refresh", true);
 }
 
 function deleteStorage() {
