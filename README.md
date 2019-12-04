@@ -1,4 +1,4 @@
-# A Blank PhoneGap App
+# COMP1661 PhoneGap App
 
 ## Usage
 Use for subject with code COMP1661 in FPT Greenwich University in VN
