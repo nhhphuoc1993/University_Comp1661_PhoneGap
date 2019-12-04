@@ -1,6 +1,7 @@
 # A Blank PhoneGap App
 
 ## Usage
+Use for subject with code COMP1661 in FPT Greenwich University in VN
 
 ### PhoneGap CLI
 
@@ -11,4 +12,3 @@
 In your browser, open the file:
 
     /www/index.html
-
